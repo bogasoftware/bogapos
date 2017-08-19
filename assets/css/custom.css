@@ -1,0 +1,78 @@
+.modal {
+    display:    none;
+    position:   fixed;
+    z-index:    11119006;
+    top:        0;
+    left:       0;
+    height:     100%;
+    width:      100%;
+    background: rgba( 255, 255, 255, .8 ) 
+        url('../img/spinners/spinner.gif') 
+        50% 50% 
+        no-repeat;
+}
+
+body.loading {
+    overflow: hidden;   
+}
+
+body.loading .modal {
+    display: block;
+}
+.logo_regular{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+#products .uk-form input{
+    width: 100%;
+}
+.uk-form .uk-grid > *{
+    padding-left: 7px;
+}
+.uk-form .uk-grid.uk-grid-collapse > *{
+    padding: 0;
+}
+.uk-form label{
+    text-align: right;
+    padding-top: 7px;
+}
+#products .product-name{
+    font-size: 16px;
+    font-weight: 300;
+    display: block;
+    padding-top: 4px;
+}
+#products .image{
+    display: inline-block;
+    float: left;
+    padding-right: 5px;
+}
+
+.uk-form #searchProduct{
+    font-size: 14px;
+    height: 42px;
+    width: 100%;
+}
+#modal-payment .text-field{
+    font-size: 24px;
+    text-align: right;
+    display: block;
+    vertical-align: middle;
+}
+#modal-payment .field{
+    font-size: 28px;
+    text-align: right;
+    display: block;
+    margin-right: 30px;
+    padding: 0 20px;
+}
+#modal-payment .md-input-wrapper{
+    width: 92%;
+}
+#modal-payment #change{
+    display: none;
+}
+.input-number{
+    text-align: right;
+}
