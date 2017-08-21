@@ -1,7 +1,7 @@
 <?php
 
-define('VERSION', '1');
-define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'development');
+define('VERSION', '1.0');
+define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'production');
 
 switch (ENVIRONMENT) {
     case 'development':
