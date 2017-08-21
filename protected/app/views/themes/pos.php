@@ -7,7 +7,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <!-- Remove Tap Highlight on Windows Phone IE -->
         <meta name="msapplication-tap-highlight" content="no"/>
-        <title><?php echo "{$title}"; ?></title>
+        <title><?php echo "{$title} - BogaPOS"; ?></title>
         <link rel="shortcut icon" href="<?php echo site_url('assets/img/favicon.png'); ?>" type="image/x-icon">
         <link rel="apple-touch-icon-precomposed" href="<?php echo site_url('assets/images/favicon.png'); ?>">
 
@@ -61,8 +61,8 @@
                                 <a href="#" class="user_action_image"><?php echo $user->fullname; ?> <i class="material-icons md-24 md-light">keyboard_arrow_down</i></a>
                                 <div class="uk-dropdown uk-dropdown-small">
                                     <ul class="uk-nav js-uk-prevent">
-                                        <li><a href="<?php echo site_url('auth/profile'); ?>">Pengaturan Akun</a></li>
-                                        <li><a href="<?php echo site_url('auth/logout'); ?>">Keluar</a></li>
+                                        <li><a href="<?php echo site_url('auth/profile'); ?>"><?php echo lang('account_setting_label'); ?></a></li>
+                                        <li><a href="<?php echo site_url('auth/logout'); ?>"><?php echo lang('account_logout_label'); ?></a></li>
                                     </ul>
                                 </div>
                             </li>

@@ -21,5 +21,5 @@ $lang['product_stock_label'] = 'Stok';
 
 $lang['product_upload_image_failed_message'] = "Upload gambar gagal.";
 $lang['product_save_success_message'] = "Produk '%s' berhasil disimpan.";
-$lang['product_delete_success_message'] = "Produk '%s' berhasil dihapus..";
-$lang['product_delete_failed_message'] = "Produk '%s' gagal dihapus..";
+$lang['product_delete_success_message'] = "Produk '%s' berhasil dihapus.";
+$lang['product_delete_failed_message'] = "Produk '%s' gagal dihapus.";

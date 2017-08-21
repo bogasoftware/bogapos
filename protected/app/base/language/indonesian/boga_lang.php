@@ -24,6 +24,9 @@ $lang['action_pay_button'] = 'Bayar';
 $lang['action_finish_button'] = 'Selesai';
 $lang['action_choose_button'] = 'Pilih';
 
+$lang['account_setting_label'] = 'Pengaturan Akun';
+$lang['account_logout_label'] = 'Keluar';
+
 $lang['January'] = 'Januari';
 $lang['February'] = 'Februari';
 $lang['March'] = 'Maret';

@@ -51,4 +51,4 @@ $lang['sale_not_choose_store_message'] = "Transaksi tidak dapat dilakukan karna 
 $lang['sale_products_empty_message'] = "Daftar produk yang dijual masih kosong.";
 $lang['sale_code_exist_message'] = "Kode transaksi sudah ada.";
 
-$lang['sale_product_price_help'] = "Harga akan mengubah cost/harga jual pada master produk.";
+$lang['sale_product_price_help'] = "Harga akan mengubah harga jual pada master produk.";

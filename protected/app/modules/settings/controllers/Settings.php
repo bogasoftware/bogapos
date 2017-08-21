@@ -9,9 +9,8 @@ class Settings extends CI_Controller {
 
         if (!$this->ion_auth->logged_in())
             redirect('auth/login');
-        if (!$this->ion_auth->in_group(2))
-            redirect('404');
 
+        $this->lang->load('settings', settings('language'));
         $this->data['menu'] = array('menu' => 'setting', 'submenu' => '');
     }
 
@@ -19,10 +18,16 @@ class Settings extends CI_Controller {
         $this->template->_default();
         $this->template->form();
 
-        $this->output->set_title('Pengaturan - Bogatoko');
+        $this->output->set_title(lang('setting_title'));
 
-        $this->data['customers'] = $this->main->gets('customers', array('merchant' => $this->data['user']->merchant));
-        $this->data['suppliers'] = $this->main->gets('suppliers', array('merchant' => $this->data['user']->merchant));
+        $this->data['customers'] = $this->main->gets('customers');
+        $this->data['suppliers'] = $this->main->gets('suppliers');
+        $settings = $this->main->gets('settings');
+        foreach ($settings->result() as $setting) {
+            $this->data['settings'][$setting->key] = $setting->value;
+        }
+        $this->data['settings'] = (object) $this->data['settings'];
+        $this->data['timezones'] = DateTimeZone::listIdentifiers(DateTimeZone::ALL);
 
         $this->load->view('settings', $this->data);
     }
@@ -30,24 +35,31 @@ class Settings extends CI_Controller {
     public function save() {
         $this->input->is_ajax_request() or exit('No direct post submit allowed!');
 
-        $this->form_validation->set_rules('name', 'Nama Perusahaan', 'trim|required');
-        $this->form_validation->set_rules('description', 'Deskripsi Perusahaan', 'trim|required');
-        $this->form_validation->set_rules('address', 'Alamat', 'trim|required');
-        $this->form_validation->set_rules('telephone', 'Telepon', 'trim|required');
-        $this->form_validation->set_rules('default_customer', 'Konsumen Default', 'trim|required');
-        $this->form_validation->set_rules('default_supplier', 'Pemasok Default', 'trim|required');
-        $this->form_validation->set_rules('enable_tax', 'Pajak', 'trim');
+        $this->form_validation->set_rules('store_name', 'lang:setting_name_label', 'trim|required');
+        $this->form_validation->set_rules('store_address', 'lang:setting_address_label', 'trim|required');
+        $this->form_validation->set_rules('store_phone', 'lang:setting_phone_label', 'trim|required');
+        $this->form_validation->set_rules('default_customer', 'lang:setting_default_customer_label', 'trim|required');
+        $this->form_validation->set_rules('default_supplier', 'lang:setting_default_supplier_label', 'trim|required');
+        $this->form_validation->set_rules('language', 'lang:setting_language_label', 'trim|required');
+        $this->form_validation->set_rules('timezone', 'lang:setting_timezone_label', 'trim|required');
+        $this->form_validation->set_rules('enable_tax', 'lang:setting_enable_tax_label', 'trim');
 
-        //validate the form
         if ($this->form_validation->run() === true) {
             $data = $this->input->post(null, true);
-            $save = $this->main->update('merchants', $data, array('id' => $this->data['user']->merchant));
-//
+
+            foreach ($data as $key => $value) {
+                $settings[] = array(
+                    'key' => $key,
+                    'value' => $value
+                );
+            }
+            $save = $this->db->update_batch('settings', $settings, 'key');
+
             if ($save !== false) {
-                $this->data['merchant'] = $this->main->get('merchants', array('id' => $this->data['user']->merchant));
-                $return = array('message' => "Konfigurasi berhasil disimpan.", 'status' => 'success');
+                $this->config->set_item('language', $data['language']);
+                $return = array('message' => lang('setting_save_success_message'), 'status' => 'success');
             } else {
-                $return = array('message' => 'Gagal menyimpan data.', 'status' => 'danger');
+                $return = array('message' => lang('setting_save_failed_message'), 'status' => 'danger');
             }
         } else {
             $return = array('message' => validation_errors(), 'status' => 'danger');

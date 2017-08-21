@@ -307,10 +307,7 @@ CREATE TABLE `settings` (
 -- Dumping data untuk tabel `settings`
 --
 
-INSERT INTO `settings` (`id`, `key`, `value`) VALUES
-(1, 'timezone', 'Asia/Jakarta'),
-(2, 'language', 'indonesian'),
-(3, 'enabe_tax', 'false');
+INSERT INTO `settings` VALUES (1,'timezone','Asia/Jakarta'),(2,'language','english'),(3,'enable_tax','false'),(4,'default_customer','1'),(5,'default_supplier','1'),(6,'store_name','My Store'),(7,'store_address',''),(8,'store_phone','');
 
 -- --------------------------------------------------------
 
