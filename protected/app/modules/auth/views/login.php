@@ -16,7 +16,7 @@
                     <button class="md-btn md-btn-primary md-btn-block md-btn-large" type="submit"><?php echo lang('login_submit_btn'); ?></button>
                 </div>
                 <div class="uk-margin-top">
-                    <a href="<?php echo site_url('auth/forgot_password'); ?>" class="uk-float-right"><?php echo lang('login_forgot_password'); ?></a>
+                    <!--<a href="<?php // echo site_url('auth/forgot_password'); ?>" class="uk-float-right"><?php // echo lang('login_forgot_password'); ?></a>-->
                     <span class="icheck-inline">
                         <input type="checkbox" name="remember" id="remember" data-md-icheck />
                         <label for="remember" class="inline-label"><?php echo lang('login_remember_label'); ?></label>

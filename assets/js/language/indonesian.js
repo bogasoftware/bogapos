@@ -5,6 +5,10 @@ var lang = {
     purchases: {
         label: 'Pembelian'
     },
+    text: {
+        quantity: 'Kuantitas',
+        profit_loss: 'Laba/Rugi',
+    },
     button: {
         delete: 'Hapus',
         cancel: 'Batal',

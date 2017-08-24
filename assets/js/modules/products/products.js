@@ -10,7 +10,7 @@ $('body').on('click', '#btn-add', function (e) {
     $('#price').val('0');
     $('#image').val('');
     $('#image-image').removeAttr('src');
-    $('#quantity-store').load(base_url + 'products/get_store_quantity/add');
+    $('#quantity-form').show();
     $('#form .md-input').each(function () {
         if ($(this).val().length == 0) {
             $(this).parent('div.md-input-wrapper').removeClass('md-input-filled');
@@ -38,14 +38,14 @@ $('body').on('click', '.btn-edit', function (e) {
             $('#cost').val(data.cost);
             $('#price').val(data.price);
             $('#image-image').attr('src', base_url + data.image);
-            $('#quantity-store').load(base_url + 'products/get_store_quantity/edit/' + data.id);
+            $('#quantity-form').hide();
             $('#form .md-input').each(function () {
                 if ($(this).val().length > 0) {
                     $(this).parent('div.md-input-wrapper').addClass('md-input-filled');
                 }
             });
             showModal('form');
-            $('.input-number').number(true, 0, ',', '.');
+            $('.input-number').number(true, decimal_digit, decimal_separator, thousand_separator);
             $('.input-number').attr('autocomplete', 'off');
         }
     });

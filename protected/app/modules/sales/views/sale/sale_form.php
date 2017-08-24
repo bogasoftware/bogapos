@@ -11,7 +11,7 @@
                             <div class="uk-grid">
                                 <div class="uk-width-1-3">
                                     <label for="date"><?php echo lang('sale_date_label'); ?></label>
-                                    <input type="text" name="date" id="date" readonly class="md-input" data-uk-datepicker="{format:'YYYY-MM-DD'}"/>
+                                    <input type="text" name="date" id="date" readonly class="md-input" data-uk-datepicker="{format:'<?php echo settings('date_format_uk'); ?>'}"/>
                                 </div>
                                 <div class="uk-width-1-3">
                                     <label for="code"><?php echo lang('sale_code_label'); ?></label>
@@ -20,8 +20,8 @@
                                 <div class="uk-width-1-3">
                                     <div class="uk-autocomplete uk-position-relative uk-loading uk-input-group" data-uk-autocomplete="{source:'<?php echo site_url('sales/get_customers'); ?>',minLength:'1'}" id="customer_autocomplete">
                                         <label for="customer_name"><?php echo lang('sale_customer_label'); ?></label>
-                                        <input type="text" name="customer_name" id="customer_name"  class="md-input" />
-                                        <span class="uk-input-group-addon" id="customer_change" style="display: none;">
+                                        <input type="text" name="customer_name" id="customer_name"  class="md-input" disabled="" />
+                                        <span class="uk-input-group-addon" id="customer_change">
                                             <a href="javascript:change_customer()" data-uk-tooltip title="<?php echo lang('sale_edit_customer_label'); ?>"><i class="material-icons">cached</i></a>
                                         </span>
                                         <script type="text/autocomplete">
@@ -76,7 +76,7 @@
                                 <div id="shipping-address-form" style="display: none">
                                     <div class="uk-form-row uk-margin-top">
                                         <label for="shipping_date"><?php echo lang('sale_delivery_date_label'); ?></label>
-                                        <input type="text" name="shipping_date" id="shipping_date" readonly class="md-input" data-uk-datepicker="{format:'YYYY-MM-DD'}"/>
+                                        <input type="text" name="shipping_date" id="shipping_date" readonly class="md-input" data-uk-datepicker="{format:'<?php echo settings('date_format_uk'); ?>'}"/>
                                     </div>
                                     <div class="uk-form-row uk-margin-top">
                                         <label for="shipping_recipient"><?php echo lang('sale_delivery_receipent_label'); ?></label>
@@ -109,7 +109,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <?php if (settings('enable_tax') == true) { ?>
+                                <?php if (settings('enable_tax') == 'true') { ?>
                                     <div class="uk-form-row uk-form uk-margin-top">
                                         <div class="uk-grid">
                                             <label class="uk-width-4-10" for="tax"><?php echo lang('sale_tax_label'); ?></label>
@@ -192,14 +192,14 @@
 <?php if ($data) { ?>
         var data = JSON.parse('<?php echo json_encode($data); ?>');
         localStorage.setItem('slmethod', 'edit');
-        localStorage.setItem('sldate', data.date.substring(0, 10));
+        localStorage.setItem('sldate', data.date);
         localStorage.setItem('slcode', data.code);
         localStorage.setItem('slcustomer', data.customer);
         localStorage.setItem('slcustomer_name', data.customer_name);
     <?php if ($shipping) { ?>
             var shipping = JSON.parse('<?php echo json_encode($shipping); ?>');
             localStorage.setItem('slshipping', '1');
-            localStorage.setItem('slshippingdate', shipping.date.substring(0, 10));
+            localStorage.setItem('slshippingdate', shipping.date);
             localStorage.setItem('slshippingrecipient', shipping.recipient);
             localStorage.setItem('slshippingaddress', shipping.address);
             localStorage.setItem('slshipping_cost', data.shipping);
@@ -224,16 +224,14 @@
         if (!localStorage.getItem('sldate')) {
             localStorage.setItem('sldate', '<?php echo date('Y-m-d'); ?>');
         }
-    <?php if ($this->session->userdata('store')->id != 'all') { ?>
-            if (!localStorage.getItem('slcode')) {
-                localStorage.setItem('slcode', '<?php echo trx_code($this->session->userdata('store')->code, 'sales', 'SL'); ?>');
-            }
-    <?php } ?>
+        if (!localStorage.getItem('slcode')) {
+            localStorage.setItem('slcode', '<?php echo trx_code('sales'); ?>');
+        }
         if (!localStorage.getItem('slcustomer')) {
-            localStorage.setItem('slcustomer', '');
+            localStorage.setItem('slcustomer', '<?php echo $default_customer->id; ?>');
         }
         if (!localStorage.getItem('slcustomer_name')) {
-            localStorage.setItem('slcustomer_name', '');
+            localStorage.setItem('slcustomer_name', '<?php echo $default_customer->name; ?>');
         }
 <?php } ?>
 </script>

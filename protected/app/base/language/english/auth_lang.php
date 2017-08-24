@@ -15,6 +15,20 @@ $lang['login_remember_label'] = 'Remember Me';
 $lang['login_submit_btn'] = 'Login';
 $lang['login_forgot_password'] = 'Forgot your password?';
 
+$lang['account_setting_title'] = 'Account Setting';
+
+$lang['account_fullname_label'] = 'Full Name';
+$lang['account_phone_label'] = 'Phone';
+$lang['account_email_label'] = 'Email';
+$lang['account_old_password_label'] = 'Old Password';
+$lang['account_new_password_label'] = 'New Password';
+
+$lang['account_new_password_help'] = '*to change your password, please fill old and new password';
+
+$lang['account_old_password_warning_message'] = 'To change password please fill your old password.';
+$lang['account_old_password_error_message'] = 'Old password is wrong.';
+$lang['account_update_success_message'] = 'Your account has been successfully saved.';
+
 // Index
 $lang['index_heading'] = 'Users';
 $lang['index_subheading'] = 'Below is a list of the users.';

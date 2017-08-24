@@ -8,7 +8,7 @@ $lang['supplier_title'] = 'Supplier List';
 $lang['supplier_list_heading'] = 'Supplier List';
 $lang['supplier_list_subheading'] = 'Manage supplier data';
 
-$lang['supplier_name_label'] = 'Namae';
+$lang['supplier_name_label'] = 'Name';
 $lang['supplier_email_label'] = 'Email';
 $lang['supplier_address_label'] = 'Address';
 $lang['supplier_phone_label'] = 'Telephone';

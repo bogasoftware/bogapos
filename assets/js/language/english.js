@@ -5,6 +5,10 @@ var lang = {
     purchases: {
         label: 'Purchases'
     },
+    text: {
+        quantity: 'Quantity',
+        profit_loss: 'Profit Loss',
+    },
     button: {
         delete: 'Delete',
         cancel: 'Cancel',

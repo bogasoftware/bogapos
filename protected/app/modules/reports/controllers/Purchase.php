@@ -9,8 +9,7 @@ class Purchase extends CI_Controller {
 
         if (!$this->ion_auth->logged_in())
             redirect('auth/login');
-        if (!$this->ion_auth->in_group(2))
-            redirect('404');
+        $this->lang->load('reports', settings('language'));
         $this->load->model('purchase_model', 'purchase');
 
         $this->data['menu'] = array('menu' => 'report', 'submenu' => 'purchase');
@@ -22,12 +21,12 @@ class Purchase extends CI_Controller {
         $this->load->css('assets/components/c3js-chart/c3.min.css');
         $this->load->js('assets/components/d3/d3.min.js');
         $this->load->js('assets/components/c3js-chart/c3.min.js');
-        $this->load->js('assets/js/modules/reports/purchase/chart.min.js');
+        $this->load->js('assets/js/modules/reports/purchase/chart.js');
 
-        $this->output->set_title('Laporan Grafik Pembelian - Bogatoko');
+        $this->output->set_title(lang('report_purchase_chart_title'));
 
-        $this->data['years'] = $this->purchase->get_years($this->data['user']->merchant, $this->session->userdata('store')->id);
-        $this->data['products'] = $this->purchase->get_products($this->data['user']->merchant);
+        $this->data['years'] = $this->purchase->get_years();
+        $this->data['products'] = $this->purchase->get_products();
 
         $this->load->view('purchase/chart', $this->data);
     }
@@ -37,9 +36,9 @@ class Purchase extends CI_Controller {
 
         $this->load->js('assets/components/tablesorter/dist/js/jquery.tablesorter.min.js');
         $this->load->js('assets/components/tablesorter/dist/js/extras/jquery.tablesorter.pager.min.js');
-        $this->load->js('assets/js/modules/reports/purchase/recap.min.js');
+        $this->load->js('assets/js/modules/reports/purchase/recap.js');
 
-        $this->output->set_title('Laporan Rekap Pembelian - Bogatoko');
+        $this->output->set_title(lang('report_purchase_recap_title'));
 
         $this->load->view('purchase/recap', $this->data);
     }
@@ -49,9 +48,9 @@ class Purchase extends CI_Controller {
 
         $this->load->js('assets/components/tablesorter/dist/js/jquery.tablesorter.min.js');
         $this->load->js('assets/components/tablesorter/dist/js/extras/jquery.tablesorter.pager.min.js');
-        $this->load->js('assets/js/modules/reports/purchase/daily.min.js');
+        $this->load->js('assets/js/modules/reports/purchase/daily.js');
 
-        $this->output->set_title('Laporan Pembelian Harian - Bogatoko');
+        $this->output->set_title(lang('report_purchase_daily_title'));
 
         $this->load->view('purchase/daily', $this->data);
     }
@@ -59,7 +58,7 @@ class Purchase extends CI_Controller {
     public function monthly_chart() {
         $this->input->is_ajax_request() or exit('No direct post submit allowed!');
 
-        $purchase = $this->purchase->monthly($this->data['user']->merchant, $this->session->userdata('store')->id, $this->input->post('year'));
+        $purchase = $this->purchase->monthly($this->input->post('year'));
 
         $data = array();
         foreach ($purchase->result() as $purchase) {
@@ -74,8 +73,7 @@ class Purchase extends CI_Controller {
 
     public function product_monthly_chart() {
         $this->input->is_ajax_request() or exit('No direct post submit allowed!');
-        $purchase = $this->purchase->product_monthly($this->data['user']->merchant, $this->session->userdata('store')->id, $this->input->post('year'), $this->input->post('product'));
-//        $purchase = $this->purchase->product_monthly($this->data['user']->merchant, $this->session->userdata('store')->id, 2016, 1);
+        $purchase = $this->purchase->product_monthly($this->input->post('year'), $this->input->post('product'));
 
         $data = array();
         foreach ($purchase->result() as $purchase) {
@@ -83,7 +81,7 @@ class Purchase extends CI_Controller {
         }
         $output['quantity'] = array();
         for ($i = 1; $i <= 12; $i++) {
-            $output['data'][] = array('Pembelian' => (isset($data[$i])) ? $data[$i]['total'] : 0);
+            $output['data'][] = array(lang('report_purchase_text') => (isset($data[$i])) ? $data[$i]['total'] : 0);
             $quantity[($i - 1)] = (isset($data[$i])) ? $data[$i]['quantity'] : 0;
         }
         array_push($output['quantity'], $quantity);
@@ -93,13 +91,13 @@ class Purchase extends CI_Controller {
     public function recap_data() {
         $this->input->is_ajax_request() or exit('No direct post submit allowed!');
 
-        $purchases = $this->purchase->recap($this->data['user']->merchant, $this->session->userdata('store')->id, $this->input->post('start'), $this->input->post('end'));
+        $purchases = $this->purchase->recap(get_date_mysql($this->input->post('start')), get_date_mysql($this->input->post('end')));
         $output = '';
         if ($purchases) {
             foreach ($purchases->result() as $purchase) {
                 $output .= '<tr>';
                 $output .= '<td>' . $purchase->code . '</td>';
-                $output .= '<td>' . date_simple($purchase->date) . '</td>';
+                $output .= '<td>' . get_date($purchase->date) . '</td>';
                 $output .= '<td>' . $purchase->supplier_name . '</td>';
                 $output .= '<td class="uk-text-right subtotal">' . number($purchase->subtotal) . '</td>';
                 $output .= '<td class="uk-text-right discount">' . number($purchase->discount) . '</td>';
@@ -118,12 +116,12 @@ class Purchase extends CI_Controller {
     public function daily_data() {
         $this->input->is_ajax_request() or exit('No direct post submit allowed!');
 
-        $purchases = $this->purchase->daily($this->data['user']->merchant, $this->session->userdata('store')->id, $this->input->post('start'), $this->input->post('end'));
+        $purchases = $this->purchase->daily(get_date_mysql($this->input->post('start')), get_date_mysql($this->input->post('end')));
         $output = '';
         if ($purchases) {
             foreach ($purchases->result() as $purchase) {
                 $output .= '<tr>';
-                $output .= '<td>' . date_simple($purchase->date) . '</td>';
+                $output .= '<td>' . get_date($purchase->date) . '</td>';
                 $output .= '<td class="uk-text-right trans">' . number($purchase->trans) . '</td>';
                 $output .= '<td class="uk-text-right total">' . number($purchase->total) . '</td>';
                 $output .= '<td class="uk-text-right cash">' . number($purchase->cash) . '</td>';

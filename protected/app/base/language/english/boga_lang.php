@@ -13,6 +13,7 @@ $lang['menu_suppliers_label'] = 'Suppliers';
 $lang['menu_stores_label'] = 'Stores';
 $lang['menu_reports_label'] = 'Reports';
 $lang['menu_settings_label'] = 'Settings';
+$lang['menu_settings_code_label'] = 'Code Trx';
 
 $lang['choose_store_heading'] = 'Store List';
 $lang['choose_store_subheading'] = 'To make a transaction, select store first.';
@@ -23,6 +24,7 @@ $lang['action_cancel_button'] = 'Cancel';
 $lang['action_pay_button'] = 'Pay';
 $lang['action_finish_button'] = 'Finish';
 $lang['action_choose_button'] = 'Select';
+$lang['action_submit_button'] = 'Submit';
 
 $lang['account_setting_label'] = 'Account Setting';
 $lang['account_logout_label'] = 'Logout';

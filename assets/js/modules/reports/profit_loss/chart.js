@@ -1,6 +1,5 @@
 $(function () {
     bt_reports_profit_loss.monthly();
-//    bt_reports_profit_loss.monthly(), bt_reports_profit_loss.monthly_product();
     $("#select-year").selectize({
         onDropdownOpen: function (t) {
             t.hide().velocity("slideDown", {begin: function () {
@@ -14,7 +13,6 @@ $(function () {
         },
         onChange: function (t) {
             bt_reports_profit_loss.monthly();
-//            bt_reports_profit_loss.monthly(), bt_reports_profit_loss.monthly_product();
             $('.year').text($(this).val());
         }
     });
@@ -36,7 +34,7 @@ bt_reports_profit_loss = {
                             json: response,
                             type: "bar",
                             keys: {
-                                value: ['Laba/Rugi'],
+                                value: [lang.text.profit_loss],
                             }
                         },
                         axis: {
@@ -50,7 +48,7 @@ bt_reports_profit_loss = {
                             },
                             x: {
                                 type: 'category',
-                                categories: ['Ja', 'Fe', 'Ma', 'Ap', 'Me', 'Ju', 'Ju', 'Ag', 'Se', 'Ok', 'No', 'De']
+                                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
                             }
                         },
                         tooltip: {
@@ -59,7 +57,7 @@ bt_reports_profit_loss = {
                                     return get_month_from_chart(d);
                                 },
                                 value: function (value, ratio, id) {
-                                    return $.number(value, 0, ',', '.');
+                                    return number(value);
                                 }
                             }
                         },
@@ -72,74 +70,4 @@ bt_reports_profit_loss = {
             });
         }
     }
-//    , monthly_percentage: function () {
-//        var e = '#profit-loss-product-monthly-chart';
-//        if ($(e).length) {
-//            $.ajax({
-//                url: base_url + 'reports/profit_loss/product_monthly_chart/',
-//                type: 'post',
-//                data: {year: $('#select-year').val(), product: $('#select-product').val()},
-//                dataType: "json",
-//                success: function (response) {
-//                    var t = c3.generate({
-//                        bindto: e,
-//                        data: {
-//                            json: response.data,
-//                            type: "bar",
-//                            keys: {
-//                                value: ['Penjualan'],
-//                            }
-//                        },
-//                        axis: {
-//                            y: {
-//                                tick: {
-//                                    format: function (d) {
-//                                        var formatValue = d3.format(".1s");
-//                                        return formatValue(d);
-//                                    }
-//                                }
-//                            },
-//                            x: {
-//                                type: 'category',
-//                                categories: ['Ja', 'Fe', 'Ma', 'Ap', 'Me', 'Ju', 'Ju', 'Ag', 'Se', 'Ok', 'No', 'De']
-//                            }
-//                        },
-//                        tooltip: {
-//                            contents: function (d, defaultTitleFormat, defaultValueFormat, color) {
-//                                var $$ = this, config = $$.config,
-//                                        text, i, title, value, name, bgcolor;
-//                                for (i = 0; i < d.length; i++) {
-//                                    if (!(d[i] && (d[i].value || d[i].value === 0))) {
-//                                        continue;
-//                                    }
-//
-//                                    if (!text) {
-//                                        title = get_month_from_chart(d[i].x);
-//                                        text = "<table class='" + $$.CLASS.tooltip + "'><tr><th colspan='2'>" + title + "</th></tr>";
-//                                    }
-//
-//                                    bgcolor = $$.levelColor ? $$.levelColor(d[i].value) : color(d[i].id);
-//
-//                                    text += "<tr class='" + $$.CLASS.tooltipName + "-" + d[i].id + "'>";
-//                                    text += "<td class='name'><span style='background-color:" + bgcolor + "'></span>" + d[i].name + "</td>";
-//                                    text += "<td class='value'>" + $.number(d[i].value, 0, ',', '.') + "</td>";
-//                                    text += "</tr>";
-//                                    text += "<tr class='" + $$.CLASS.tooltipName + "-" + d[i].id + "'>";
-//                                    text += "<td class='name'><span style='background-color:" + bgcolor + "'></span>Kuantitas</td>";
-//                                    var value = response.quantity[0];
-//                                    text += "<td class='value'>" + $.number(value[d[i].index], 0, ',', '.') + "</td>";
-//                                    text += "</tr>";
-//                                }
-//                                return text + "</table>";
-//                            }
-//                        },
-//                        color: {pattern: ["#1f77b4", "#ff7f0e", "#2ca02c"]}
-//                    });
-//                    $window.on("debouncedresize", function () {
-//                        $(t).resize()
-//                    });
-//                }
-//            });
-//        }
-//    }
 }

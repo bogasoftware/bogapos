@@ -1,21 +1,16 @@
-if (localStorage.getItem('slmethod') == 'add' && localStorage.getItem('store') == 'all') {
-    showModalNotKeyboard('store');
-}
 if (localStorage.getItem('slproducts')) {
     products = JSON.parse(localStorage.getItem('slproducts'));
 } else {
     products = {};
 }
 if (localStorage.getItem('sldate')) {
-    $('#date').val(localStorage.getItem('sldate'));
+    $('#date').val(get_date(localStorage.getItem('sldate')));
 }
 if (localStorage.getItem('slcode')) {
     $('#code').val(localStorage.getItem('slcode'));
 }
 if (localStorage.getItem('slcustomer')) {
     $('#customer').val(localStorage.getItem('slcustomer'));
-    $('#customer_name').attr('disabled', 'disabled');
-    $('#customer_change').show();
 }
 if (localStorage.getItem('slcustomer_name')) {
     $('#customer_name').val(localStorage.getItem('slcustomer_name'));
@@ -38,7 +33,7 @@ if (localStorage.getItem('slcash')) {
     $('#cash').val(localStorage.getItem('slcash'));
 }
 if (localStorage.getItem('slshippingdate')) {
-    $('#shipping_date').val(localStorage.getItem('slshippingdate'));
+    $('#shipping_date').val(get_date(localStorage.getItem('slshippingdate')));
 }
 if (localStorage.getItem('slshippingrecipient')) {
     $('#shipping_recipient').val(localStorage.getItem('slshippingrecipient'));
@@ -192,7 +187,7 @@ function loadProducts() {
             newTr.prependTo("#products");
             calculateRow(id);
             updateRowTotal(id, product.price, product.quantity, product.discount);
-            $('.input-number').number(true, 0, ',', '.');
+            $('.input-number').number(true, decimal_digit, decimal_separator, thousand_separator);
         });
         $('#products').append(newRow());
         $('#searchProduct').focus();
@@ -200,7 +195,7 @@ function loadProducts() {
         removeSession();
         var row = (new Date).getTime();
         newRow(row).prependTo("#products");
-        $('.input-number').number(true, 0, ',', '.');
+        $('.input-number').number(true, decimal_digit, decimal_separator, thousand_separator);
         $('#product-' + row).focus();
     }
 }

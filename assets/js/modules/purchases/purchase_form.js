@@ -7,15 +7,13 @@ if (localStorage.getItem('pcproducts')) {
     products = {};
 }
 if (localStorage.getItem('pcdate')) {
-    $('#date').val(localStorage.getItem('pcdate'));
+    $('#date').val(get_date(localStorage.getItem('pcdate')));
 }
 if (localStorage.getItem('pccode')) {
     $('#code').val(localStorage.getItem('pccode'));
 }
 if (localStorage.getItem('pcsupplier')) {
     $('#supplier').val(localStorage.getItem('pcsupplier'));
-    $('#supplier_name').attr('disabled', 'disabled');
-    $('#supplier_change').show();
 }
 if (localStorage.getItem('pcsupplier_name')) {
     $('#supplier_name').val(localStorage.getItem('pcsupplier_name'));
@@ -124,7 +122,7 @@ function selectProduct(product) {
         data_product.id = product.id;
         data_product.code = product.code;
         data_product.name = product.name;
-        data_product.price = product.price;
+        data_product.price = product.cost;
         data_product.image = product.image;
         data_product.discount = 0;
         data_product.quantity = 1;
@@ -170,7 +168,7 @@ function loadProducts() {
             newTr.prependTo("#products");
             calculateRow(id);
             updateRowTotal(id, product.price, product.quantity, product.discount);
-            $('.input-number').number(true, 0, ',', '.');
+            $('.input-number').number(true, decimal_digit, decimal_separator, thousand_separator);
         });
         $('#products').append(newRow());
         $('#searchProduct').focus();

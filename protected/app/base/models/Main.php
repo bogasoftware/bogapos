@@ -68,12 +68,10 @@ class Main extends CI_Model {
     }
 
     function count($table, $condition = array()) {
-        $this->db->select('COUNT(*) cnt');
         if ($condition) {
             $this->db->where($condition);
         }
-        $query = $this->db->get($table);
-        return ($query->num_rows() > 0) ? $query->row()->cnt : false;
+        return $this->db->count_all_results($table);
     }
 
     function truncate($table) {

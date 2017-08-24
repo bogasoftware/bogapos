@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Sales_model extends CI_Model {
 
-    function get_all($store = 'all', $page = 0, $size, $filter = array(), $sort = array()) {
+    function get_all($page = 0, $size, $filter = array(), $sort = array()) {
         if ($page)
             $page = $page * $size;
         if ($filter) {
@@ -24,9 +24,6 @@ class Sales_model extends CI_Model {
         }
         $this->db->select('id, code, date, customer_name, grand_total, cash, credit, pos')
                 ->limit($size, $page);
-
-        if ($store != 'all')
-            $this->db->where('store', $store);
 
         $query = $this->db->get('sales');
         return($query->num_rows() > 0) ? $query : false;
@@ -50,15 +47,13 @@ class Sales_model extends CI_Model {
         return $key;
     }
 
-    function count_all($store = 'all', $filter = array()) {
+    function count_all($filter = array()) {
         if ($filter) {
             foreach ($filter as $key => $value) {
                 $key = $this->get_alias_key($key);
                 $this->db->like($key, $value);
             }
         }
-        if ($store != 'all')
-            $this->db->where('store', $store);
         $this->db->select('IFNULL(COUNT(id),0) count');
         $query = $this->db->get('sales');
         return $query->row()->count;
@@ -86,8 +81,7 @@ class Sales_model extends CI_Model {
             $sort = $this->get_alias_key($key);
             $this->db->order_by($sort, $order);
         }
-        $this->db->select('p.id, code, name, image, price, cost, ps.quantity')
-                ->join('product_store ps', 'ps.product = p.id AND ps.store = ' . $this->session->userdata('store')->id, 'left')
+        $this->db->select('p.id, code, name, image, price, cost, quantity')
                 ->limit($size, $page);                
 
         $query = $this->db->get('products p');

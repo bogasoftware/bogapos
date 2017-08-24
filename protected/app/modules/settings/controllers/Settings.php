@@ -11,7 +11,7 @@ class Settings extends CI_Controller {
             redirect('auth/login');
 
         $this->lang->load('settings', settings('language'));
-        $this->data['menu'] = array('menu' => 'setting', 'submenu' => '');
+        $this->data['menu'] = array('menu' => 'setting', 'submenu' => 'setting');
     }
 
     public function index() {
@@ -43,6 +43,8 @@ class Settings extends CI_Controller {
         $this->form_validation->set_rules('language', 'lang:setting_language_label', 'trim|required');
         $this->form_validation->set_rules('timezone', 'lang:setting_timezone_label', 'trim|required');
         $this->form_validation->set_rules('enable_tax', 'lang:setting_enable_tax_label', 'trim');
+        $this->form_validation->set_rules('duedate_payment', 'lang:setting_duedate_label', 'trim|required');
+        $this->form_validation->set_rules('number_of_decimal', 'lang:setting_number_decimal_label', 'trim');
 
         if ($this->form_validation->run() === true) {
             $data = $this->input->post(null, true);
@@ -56,28 +58,61 @@ class Settings extends CI_Controller {
             $save = $this->db->update_batch('settings', $settings, 'key');
 
             if ($save !== false) {
-                $this->config->set_item('language', $data['language']);
                 $return = array('message' => lang('setting_save_success_message'), 'status' => 'success');
             } else {
                 $return = array('message' => lang('setting_save_failed_message'), 'status' => 'danger');
             }
+            $this->load->driver('cache', array('adapter' => 'apc', 'backup' => 'file'));
+            $this->cache->delete('settings');
         } else {
             $return = array('message' => validation_errors(), 'status' => 'danger');
         }
         echo json_encode($return);
     }
 
-    public function change_store() {
+    public function code() {
+        $this->template->_default();
+        $this->template->form();
+        $this->load->js('assets/js/modules/settings/code.js');
+
+        $this->data['menu'] = array('menu' => 'setting', 'submenu' => 'code');
+        $this->output->set_title(lang('setting_code_title'));
+
+        $this->data['modules'] = array('sales', 'purchases', 'pos', 'cash_in', 'cash_out');
+
+        $this->load->view('settings_code', $this->data);
+    }
+
+    public function save_code() {
         $this->input->is_ajax_request() or exit('No direct post submit allowed!');
 
-        $id = $this->input->post('id');
-        if ($id != 'all') {
-            $id = decode($id);
-            $this->session->set_userdata('store', $this->main->get('merchant_store', array('merchant' => $this->data['user']->merchant, 'id' => $id)));
-        } else {
-            $data = (object) array('id' => 'all', 'name' => 'Semua Toko');
-            $this->session->set_userdata('store', $data);
+        $modules = array('sales', 'purchases', 'pos', 'cash_in', 'cash_out');
+        foreach ($modules as $module) {
+            $this->form_validation->set_rules('code_format_' . $module, 'lang:setting_code_format_' . $module . '_label', 'trim|required');
         }
+
+        if ($this->form_validation->run() === true) {
+            $data = $this->input->post(null, true);
+
+            foreach ($data as $key => $value) {
+                $settings[] = array(
+                    'key' => $key,
+                    'value' => $value
+                );
+            }
+            $save = $this->db->update_batch('settings', $settings, 'key');
+
+            if ($save !== false) {
+                $return = array('message' => lang('setting_save_success_message'), 'status' => 'success');
+            } else {
+                $return = array('message' => lang('setting_save_failed_message'), 'status' => 'danger');
+            }
+            $this->load->driver('cache', array('adapter' => 'apc', 'backup' => 'file'));
+            $this->cache->delete('settings');
+        } else {
+            $return = array('message' => validation_errors(), 'status' => 'danger');
+        }
+        echo json_encode($return);
     }
 
 }

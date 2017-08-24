@@ -22,6 +22,7 @@ class Template {
         $this->ci->load->js('assets/js/altair_admin_common.min.js');
         $this->ci->load->js('assets/js/jquery.form.js');
         $this->ci->load->js('assets/js/jquery.number.min.js');
+        $this->ci->load->js('assets/js/dateformat.js');
         $this->ci->load->js('assets/js/app.js');
     }
 

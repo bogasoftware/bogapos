@@ -31,49 +31,49 @@ $(function () {
                         })
                 $('#table tbody').html(response);
                 $('#table').trigger('updateAll');
-                $('#date-start-display').text(mysql_to_date_indo($('#date-start').val()));
-                $('#date-end-display').text(mysql_to_date_indo($('#date-end').val()));
+                $('#date-start-display').text($('#date-start').val());
+                $('#date-end-display').text($('#date-end').val());
                 var subtotal = 0;
                 $('#table tbody').find('.subtotal').each(function (index, elem) {
-                    var val = parseFloat($(elem).text().replace(/\./g, ''));
+                    var val = parse_number($(elem).text());
                     subtotal += val;
                 });
-                $('#table tfoot #subtotal').text($.number(subtotal, 0, ',', '.'));
+                $('#table tfoot #subtotal').text(number(subtotal));
 
                 var hpp = 0;
                 $('#table tbody').find('.hpp').each(function (index, elem) {
-                    var val = parseFloat($(elem).text().replace(/\./g, ''));
+                    var val = parse_number($(elem).text());
                     hpp += val;
                 });
-                $('#table tfoot #hpp').text($.number(hpp, 0, ',', '.'));
+                $('#table tfoot #hpp').text(number(hpp));
 
                 var gross_profit = 0;
                 $('#table tbody').find('.gross-profit').each(function (index, elem) {
-                    var val = parseFloat($(elem).text().replace(/\./g, ''));
+                    var val = parse_number($(elem).text());
                     gross_profit += val;
                 });
-                $('#table tfoot #gross-profit').text($.number(gross_profit, 0, ',', '.'));
+                $('#table tfoot #gross-profit').text(number(gross_profit));
 
                 var shipping = 0;
                 $('#table tbody').find('.hpp').each(function (index, elem) {
-                    var val = parseFloat($(elem).text().replace(/\./g, ''));
+                    var val = parse_number($(elem).text());
                     shipping += val;
                 });
-                $('#table tfoot #shipping').text($.number(shipping, 0, ',', '.'));
+                $('#table tfoot #shipping').text(number(shipping));
 
                 var discount = 0;
                 $('#table tbody').find('.discount').each(function (index, elem) {
-                    var val = parseFloat($(elem).text().replace(/\./g, ''));
+                    var val = parse_number($(elem).text());
                     discount += val;
                 });
-                $('#table tfoot #discount').text($.number(discount, 0, ',', '.'));
+                $('#table tfoot #discount').text(number(discount));
 
                 var net_profit = 0;
                 $('#table tbody').find('.net-profit').each(function (index, elem) {
-                    var val = parseFloat($(elem).text().replace(/\./g, ''));
+                    var val = parse_number($(elem).text());
                     net_profit += val;
                 });
-                $('#table tfoot #net-profit').text($.number(net_profit, 0, ',', '.'));
+                $('#table tfoot #net-profit').text(number(net_profit));
             }
         });
     })

@@ -7,30 +7,7 @@ $(document).on({
         $body.removeClass("loading");
     }
 });
-localStorage.setItem('store', $('#store').attr('data-id'));
-$('.change-store').on('click', function () {
-    $.ajax({
-        method: 'post',
-        url: base_url + 'settings/change_store',
-        data: {id: $(this).attr('data-id')},
-        success: function (response) {
-            window.location.reload();
-        }
-    });
-});
-$('#change-store').on('click', function () {
-    $.ajax({
-        method: 'post',
-        url: base_url + 'settings/change_store',
-        data: {id: $('#select-store').val()},
-        success: function (response) {
-//            showNotify(response);
-            window.location.reload();
-        }
-    });
-});
-
-$('.input-number').number(true, 0, ',', '.');
+$('.input-number').number(true, decimal_digit, decimal_separator, thousand_separator);
 $('.input-number').attr('autocomplete', 'off');
 $('.input-number').keyup(function (e) {
     var id = $(this).attr('id');
@@ -69,6 +46,21 @@ function hideModal(type) {
     if (modal.isActive()) {
         modal.hide();
     }
+}
+
+function get_date(date) {
+    date = new Date(date);
+    return date.format(date_format);
+}
+
+function number(s) {
+    return $.number(s, decimal_digit, decimal_separator, thousand_separator)
+}
+
+function parse_number(s) {
+    s = s.toString();
+    s = s.replace(decimal_separator, '.');
+    return parseFloat(s.replace(RegExp(thousand_separator, "g"), ''));
 }
 
 function date_now() {
@@ -128,13 +120,6 @@ function get_month_from_chart(month) {
             break;
     }
     return month;
-}
-
-function mysql_to_date_indo(date) {
-    var year = date.substr(0, 4);
-    var month = date.substr(5, 2);
-    var date = date.substr(8, 2);
-    return date + ' ' + get_month(parseInt(month)) + ' ' + year;
 }
 
 function get_month(month) {

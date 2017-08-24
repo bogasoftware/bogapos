@@ -31,32 +31,32 @@ $(function () {
                         })
                 $('#table tbody').html(response);
                 $('#table').trigger('updateAll');
-                $('#date-start-display').text(mysql_to_date_indo($('#date-start').val()));
-                $('#date-end-display').text(mysql_to_date_indo($('#date-end').val()));
+                $('#date-start-display').text($('#date-start').val());
+                $('#date-end-display').text($('#date-end').val());
                 var trans = 0;
                 $('#table tbody').find('.trans').each(function (index, elem) {
-                    var val = parseFloat($(elem).text().replace(/\./g, ''));
+                    var val = parse_number($(elem).text());
                     trans += val;
                 });
-                $('#table tfoot #trans').text($.number(trans, 0, ',', '.'));
+                $('#table tfoot #trans').text(number(trans));
                 var total = 0;
                 $('#table tbody').find('.total').each(function (index, elem) {
-                    var val = parseFloat($(elem).text().replace(/\./g, ''));
+                    var val = parse_number($(elem).text());
                     total += val;
                 });
-                $('#table tfoot #total').text($.number(total, 0, ',', '.'));
+                $('#table tfoot #total').text(number(total));
                 var cash = 0;
                 $('#table tbody').find('.cash').each(function (index, elem) {
-                    var val = parseFloat($(elem).text().replace(/\./g, ''));
+                    var val = parse_number($(elem).text());
                     cash += val;
                 });
-                $('#table tfoot #cash').text($.number(cash, 0, ',', '.'));
+                $('#table tfoot #cash').text(number(cash));
                 var credit = 0;
                 $('#table tbody').find('.credit').each(function (index, elem) {
-                    var val = parseFloat($(elem).text().replace(/\./g, ''));
+                    var val = parse_number($(elem).text());
                     credit += val;
                 });
-                $('#table tfoot #credit').text($.number(credit, 0, ',', '.'));
+                $('#table tfoot #credit').text(number(credit));
             }
         });
     })

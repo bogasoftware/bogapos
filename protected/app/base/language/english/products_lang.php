@@ -15,6 +15,7 @@ $lang['product_store_label'] = 'Store';
 $lang['product_image_label'] = 'Image';
 $lang['product_code_label'] = 'Code';
 $lang['product_name_label'] = 'Name';
+$lang['product_description_label'] = 'Description';
 $lang['product_cost_label'] = 'Cost';
 $lang['product_price_label'] = 'Price';
 $lang['product_stock_label'] = 'Stock';

@@ -31,50 +31,50 @@ $(function () {
                         })
                 $('#table tbody').html(response);
                 $('#table').trigger('updateAll');
-                $('#date-start-display').text(mysql_to_date_indo($('#date-start').val()));
-                $('#date-end-display').text(mysql_to_date_indo($('#date-end').val()));
+                $('#date-start-display').text($('#date-start').val());
+                $('#date-end-display').text($('#date-end').val());
                 var subtotal = 0;
                 $('#table tbody').find('.subtotal').each(function (index, elem) {
-                    var val = parseFloat($(elem).text().replace(/\./g, ''));
+                    var val = parse_number($(elem).text());
                     subtotal += val;
                 });
-                $('#table tfoot #subtotal').text($.number(subtotal, 0, ',', '.'));
+                $('#table tfoot #subtotal').text(number(subtotal));
                 var discount = 0;
                 $('#table tbody').find('.discount').each(function (index, elem) {
-                    var val = parseFloat($(elem).text().replace(/\./g, ''));
+                    var val = parse_number($(elem).text());
                     discount += val;
                 });
-                $('#table tfoot #discount').text($.number(discount, 0, ',', '.'));
+                $('#table tfoot #discount').text(number(discount));
                 var tax = 0;
                 $('#table tbody').find('.tax').each(function (index, elem) {
-                    var val = parseFloat($(elem).text().replace(/\./g, ''));
+                    var val = parse_number($(elem).text());
                     tax += val;
                 });
-                $('#table tfoot #tax').text($.number(tax, 0, ',', '.'));
+                $('#table tfoot #tax').text(number(tax));
                 var shipping = 0;
                 $('#table tbody').find('.shipping').each(function (index, elem) {
-                    var val = parseFloat($(elem).text().replace(/\./g, ''));
+                    var val = parse_number($(elem).text());
                     shipping += val;
                 });
-                $('#table tfoot #shipping').text($.number(shipping, 0, ',', '.'));
+                $('#table tfoot #shipping').text(number(shipping));
                 var total = 0;
                 $('#table tbody').find('.total').each(function (index, elem) {
-                    var val = parseFloat($(elem).text().replace(/\./g, ''));
+                    var val = parse_number($(elem).text());
                     total += val;
                 });
-                $('#table tfoot #total').text($.number(total, 0, ',', '.'));
+                $('#table tfoot #total').text(number(total));
                 var cash = 0;
                 $('#table tbody').find('.cash').each(function (index, elem) {
-                    var val = parseFloat($(elem).text().replace(/\./g, ''));
+                    var val = parse_number($(elem).text());
                     cash += val;
                 });
-                $('#table tfoot #cash').text($.number(cash, 0, ',', '.'));
+                $('#table tfoot #cash').text(number(cash));
                 var credit = 0;
                 $('#table tbody').find('.credit').each(function (index, elem) {
-                    var val = parseFloat($(elem).text().replace(/\./g, ''));
+                    var val = parse_number($(elem).text());
                     credit += val;
                 });
-                $('#table tfoot #credit').text($.number(credit, 0, ',', '.'));
+                $('#table tfoot #credit').text(number(credit));
             }
         });
     })

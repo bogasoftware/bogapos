@@ -31,8 +31,8 @@ $(function () {
                         })
                 $('#table tbody').html(response);
                 $('#table').trigger('updateAll');
-                $('#date-start-display').text(mysql_to_date_indo($('#date-start').val()));
-                $('#date-end-display').text(mysql_to_date_indo($('#date-end').val()));
+                $('#date-start-display').text($('#date-start').val());
+                $('#date-end-display').text($('#date-end').val());
             }
         });
     })

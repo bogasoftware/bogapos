@@ -11,7 +11,7 @@
                             <div class="uk-grid">
                                 <div class="uk-width-1-3">
                                     <label for="date"><?php echo lang('purchase_date_label'); ?></label>
-                                    <input type="text" name="date" id="date" readonly class="md-input" data-uk-datepicker="{format:'YYYY-MM-DD'}"/>
+                                    <input type="text" name="date" id="date" readonly class="md-input" data-uk-datepicker="{format:'<?php echo settings('date_format_uk'); ?>'}"/>
                                 </div>
                                 <div class="uk-width-1-3">
                                     <label for="code"><?php echo lang('purchase_code_label'); ?></label>
@@ -20,8 +20,8 @@
                                 <div class="uk-width-1-3">
                                     <div class="uk-autocomplete uk-position-relative uk-loading uk-input-group" data-uk-autocomplete="{source:'<?php echo site_url('purchases/get_suppliers'); ?>',minLength:'1'}" id="supplier_autocomplete">
                                         <label for="supplier_name"><?php echo lang('purchase_supplier_label'); ?></label>
-                                        <input type="text" name="supplier_name" id="supplier_name"  class="md-input" />
-                                        <span class="uk-input-group-addon" id="supplier_change" style="display: none">
+                                        <input type="text" name="supplier_name" id="supplier_name" disabled="" class="md-input" />
+                                        <span class="uk-input-group-addon" id="supplier_change">
                                             <a href="javascript:change_supplier()" data-uk-tooltip title="<?php echo lang('purchase_edit_supplier_label'); ?>"><i class="material-icons">cached</i></a>
                                         </span>
                                         <script type="text/autocomplete">
@@ -95,7 +95,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <?php if (settings('enable_tax') == true) { ?>
+                                <?php if (settings('enable_tax') == 'true') { ?>
                                     <div class="uk-form-row uk-form uk-margin-top">
                                         <div class="uk-grid">
                                             <label class="uk-width-4-10" for="tax"><?php echo lang('purchase_tax_label'); ?></label>
@@ -178,7 +178,7 @@
 <?php if ($data) { ?>
         var data = JSON.parse('<?php echo json_encode($data); ?>');
         localStorage.setItem('pcmethod', 'edit');
-        localStorage.setItem('pcdate', data.date.substring(0, 10));
+        localStorage.setItem('pcdate', data.date);
         localStorage.setItem('pccode', data.code);
         localStorage.setItem('pcsupplier', data.supplier);
         localStorage.setItem('pcsupplier_name', data.supplier_name);
@@ -206,16 +206,14 @@
         if (!localStorage.getItem('pcdate')) {
             localStorage.setItem('pcdate', '<?php echo date('Y-m-d'); ?>');
         }
-    <?php if ($this->session->userdata('store')->id != 'all') { ?>
-            if (!localStorage.getItem('pccode')) {
-                localStorage.setItem('pccode', '<?php echo trx_code($this->session->userdata('store')->code, 'purchases', 'PC'); ?>');
-            }
-    <?php } ?>
+        if (!localStorage.getItem('pccode')) {
+            localStorage.setItem('pccode', '<?php echo trx_code('purchases'); ?>');
+        }
         if (!localStorage.getItem('pcsupplier')) {
-            localStorage.setItem('pcsupplier', '');
+            localStorage.setItem('pcsupplier', '<?php echo $default_supplier->id; ?>');
         }
         if (!localStorage.getItem('pcsupplier_name')) {
-            localStorage.setItem('pcsupplier_name', '');
+            localStorage.setItem('pcsupplier_name', '<?php echo $default_supplier->name; ?>');
         }
 <?php } ?>
 </script>

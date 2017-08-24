@@ -49,7 +49,7 @@ bt_reports_purchase = {
                             json: response,
                             type: "bar",
                             keys: {
-                                value: ['Pembelian'],
+                                value: [lang.purchases.label],
                             }
                         },
                         axis: {
@@ -63,7 +63,7 @@ bt_reports_purchase = {
                             },
                             x: {
                                 type: 'category',
-                                categories: ['Ja', 'Fe', 'Ma', 'Ap', 'Me', 'Ju', 'Ju', 'Ag', 'Se', 'Ok', 'No', 'De']
+                                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
                             }
                         },
                         tooltip: {
@@ -72,7 +72,7 @@ bt_reports_purchase = {
                                     return get_month_from_chart(d);
                                 },
                                 value: function (value, ratio, id) {
-                                    return $.number(value, 0, ',', '.');
+                                    return number(value);
                                 }
                             }
                         },
@@ -99,7 +99,7 @@ bt_reports_purchase = {
                             json: response.data,
                             type: "bar",
                             keys: {
-                                value: ['Pembelian'],
+                                value: [lang.purchases.label],
                             }
                         },
                         axis: {
@@ -113,7 +113,7 @@ bt_reports_purchase = {
                             },
                             x: {
                                 type: 'category',
-                                categories: ['Ja', 'Fe', 'Ma', 'Ap', 'Me', 'Ju', 'Ju', 'Ag', 'Se', 'Ok', 'No', 'De']
+                                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
                             }
                         },
                         tooltip: {
@@ -134,12 +134,12 @@ bt_reports_purchase = {
 
                                     text += "<tr class='" + $$.CLASS.tooltipName + "-" + d[i].id + "'>";
                                     text += "<td class='name'><span style='background-color:" + bgcolor + "'></span>" + d[i].name + "</td>";
-                                    text += "<td class='value'>" + $.number(d[i].value, 0, ',', '.') + "</td>";
+                                    text += "<td class='value'>" + number(d[i].value) + "</td>";
                                     text += "</tr>";
                                     text += "<tr class='" + $$.CLASS.tooltipName + "-" + d[i].id + "'>";
                                     text += "<td class='name'><span style='background-color:" + bgcolor + "'></span>Kuantitas</td>";
                                     var value = response.quantity[0];
-                                    text += "<td class='value'>" + $.number(value[d[i].index], 0, ',', '.') + "</td>";
+                                    text += "<td class='value'>" + number(value[d[i].index]) + "</td>";
                                     text += "</tr>";
                                 }
                                 return text + "</table>";

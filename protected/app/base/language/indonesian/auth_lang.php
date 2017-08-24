@@ -15,6 +15,20 @@ $lang['login_remember_label'] = 'Ingat saya';
 $lang['login_submit_btn'] = 'Login';
 $lang['login_forgot_password'] = 'Lupa kata sandi?';
 
+$lang['account_setting_title'] = 'Pengaturan Akun';
+
+$lang['account_fullname_label'] = 'Nama Lengkap';
+$lang['account_phone_label'] = 'No. Handphone';
+$lang['account_email_label'] = 'Email';
+$lang['account_old_password_label'] = 'Password Lama';
+$lang['account_new_password_label'] = 'Password Baru';
+
+$lang['account_new_password_help'] = '*untuk merubah password isi password lama dan password baru';
+
+$lang['account_old_password_warning_message'] = 'Untuk merubah password silahkan isi password lama Anda.';
+$lang['account_old_password_error_message'] = 'Password lama yang dimasukkan salah.';
+$lang['account_update_success_message'] = 'Akun berhasil diperbaharui.';
+
 // Index
 $lang['index_heading'] = 'Pengguna';
 $lang['index_subheading'] = 'Di bawah ini list dari para Pengguna.';

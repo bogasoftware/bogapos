@@ -1,11 +1,11 @@
 <div id="page_heading" data-uk-sticky="{ top: 48, media: 960 }">
     <div class="heading_actions">
-        <a href="<?php echo site_url('reports/profit_loss/recap'); ?>" class="md-btn md-btn-wave waves-effect waves-button">Rekap</a>
-        <a href="<?php echo site_url('reports/profit_loss/detail'); ?>" class="md-btn md-btn-wave waves-effect waves-button">Detail</a>
-        <a href="<?php echo site_url('reports/profit_loss/net'); ?>" class="md-btn md-btn-wave waves-effect waves-button">Laba Bersih</a>
+        <a href="<?php echo site_url('reports/profit_loss/recap'); ?>" class="md-btn md-btn-wave waves-effect waves-button"><?php echo lang('report_recap_text'); ?></a>
+        <a href="<?php echo site_url('reports/profit_loss/detail'); ?>" class="md-btn md-btn-wave waves-effect waves-button"><?php echo lang('report_detail_text'); ?></a>
+        <a href="<?php echo site_url('reports/profit_loss/net'); ?>" class="md-btn md-btn-wave waves-effect waves-button"><?php echo lang('report_profit_loss_net_text'); ?></a>
     </div>
-    <h1>Grafik Labar/Rugi</h1>
-    <span class="uk-text-small">Periode tanggal 01 Januari <span class="year"></span> - 31 Desember <span class="year"></span></span>
+    <h1><?php echo lang('report_profit_loss_chart_heading'); ?></h1>
+    <span class="uk-text-small"><?php echo lang('report_periode_date_text'); ?> 01 <?php echo get_month('January'); ?> <span class="year"></span> - 31 <?php echo get_month('December'); ?> <span class="year"></span></span>
 </div>
 <div id="page_content_inner">
     <div class="uk-grid uk-grid-small">
@@ -26,7 +26,7 @@
                         </div>
                     </div>
                     <h3 class="md-card-toolbar-heading-text">
-                        Laba/Rugi /Bulan
+                        <?php echo lang('report_profit_loss_monthly_text'); ?>
                     </h3>
                 </div>
                 <div class="md-card-content">
@@ -34,17 +34,5 @@
                 </div>
             </div>
         </div>
-        <!--        <div class="uk-width-1-2">
-                    <div class="md-card">
-                        <div class="md-card-toolbar">
-                            <h3 class="md-card-toolbar-heading-text">
-                                Persentase Laba/Rugi /Bulan
-                            </h3>
-                        </div>
-                        <div class="md-card-content">
-                            <div id="profit-loss-percentage-monthly-chart" class="c3chart"></div>
-                        </div>
-                    </div>
-                </div>-->
     </div>
 </div>

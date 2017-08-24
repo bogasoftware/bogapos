@@ -13,6 +13,7 @@ $lang['menu_suppliers_label'] = 'Penyuplai';
 $lang['menu_stores_label'] = 'Toko';
 $lang['menu_reports_label'] = 'Laporan';
 $lang['menu_settings_label'] = 'Pengaturan';
+$lang['menu_settings_code_label'] = 'Pengaturan Kode';
 
 $lang['choose_store_heading'] = 'Daftar Toko';
 $lang['choose_store_subheading'] = 'Untuk melakukan transaksi, pilih toko terlebih dahulu.';
@@ -23,6 +24,7 @@ $lang['action_cancel_button'] = 'Batal';
 $lang['action_pay_button'] = 'Bayar';
 $lang['action_finish_button'] = 'Selesai';
 $lang['action_choose_button'] = 'Pilih';
+$lang['action_submit_button'] = 'Submit';
 
 $lang['account_setting_label'] = 'Pengaturan Akun';
 $lang['account_logout_label'] = 'Keluar';

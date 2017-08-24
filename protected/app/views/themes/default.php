@@ -26,6 +26,11 @@
         <script type="text/javascript">
             var base_url = '<?php echo base_url(); ?>';
             var current_url = '<?php echo current_url(); ?>';
+            var decimal_digit = '<?php echo settings('number_of_decimal'); ?>';
+            var decimal_separator = '<?php echo settings('separator_decimal'); ?>';
+            var thousand_separator = '<?php echo settings('separator_thousand'); ?>';
+            var date_format = '<?php echo settings('date_format'); ?>';
+            var date_format_uk = '<?php echo settings('date_format_uk'); ?>';
         </script>
 
     </head>
@@ -52,18 +57,8 @@
                     <div class="uk-navbar-flip">
                         <ul class="uk-navbar-nav user_actions">
                             <li><a href="#" id="full_screen_toggle" class="user_action_icon uk-visible-large"><i class="material-icons md-24 md-light">&#xE5D0;</i></a></li>
-                            <li <?php echo ($stores->num_rows() > 1) ? 'data-uk-dropdown="{mode:\'click\'}"' : ''; ?>>
-                                <a href="#" class="user_action_icon" id="store" data-id="<?php echo $this->session->userdata('store')->id; ?>"><?php echo $this->session->userdata('store')->name . ($stores->num_rows() > 1 ? '<i class="material-icons md-24 md-light">keyboard_arrow_down</i>' : ''); ?></a>
-                                <?php if ($stores->num_rows() > 1) { ?>
-                                    <div class="uk-dropdown uk-dropdown-small">
-                                        <ul class="uk-nav js-uk-prevent">
-                                            <li><a class="change-store" href="javascript:void(0);" data-id="all" onclick="change_store()"><?php echo lang('choose_store_all_label'); ?></a></li>
-                                            <?php foreach ($stores->result() as $store) { ?>
-                                                <li><a class="change-store" href="javascript:void(0);" data-id="<?php echo encode($store->id); ?>"><?php echo $store->name; ?></a></li>
-                                            <?php } ?>
-                                        </ul>
-                                    </div>
-                                <?php } ?>
+                            <li>
+                                <a href="#" class="user_action_icon"><?php echo settings('store_name'); ?></a>
                             </li>
                             <li data-uk-dropdown="{mode:'click',pos:'bottom-right'}">
                                 <a href="#" class="user_action_image"><?php echo $user->fullname; ?> <i class="material-icons md-24 md-light">keyboard_arrow_down</i></a>
@@ -103,9 +98,9 @@
                             <li class="<?php echo ($menu['menu'] == 'sales' && $menu['submenu'] == 'sales') ? 'act_item' : ''; ?>">
                                 <a href="<?php echo site_url('sales'); ?>"><?php echo lang('menu_sales_label'); ?></a>
                             </li>
-                            <li class="<?php echo ($menu['menu'] == 'sales' && $menu['submenu'] == 'pos') ? 'act_item' : ''; ?>">
+<!--                            <li class="<?php echo ($menu['menu'] == 'sales' && $menu['submenu'] == 'pos') ? 'act_item' : ''; ?>">
                                 <a href="<?php echo site_url('sales/pos'); ?>"><?php echo lang('menu_sale_pos_label'); ?></a>
-                            </li>
+                            </li>-->
                             <li class="<?php echo ($menu['menu'] == 'sales' && $menu['submenu'] == 'customer') ? 'act_item' : ''; ?>">
                                 <a href="<?php echo site_url('sales/customers'); ?>"><?php echo lang('menu_customers_label'); ?></a>
                             </li>
@@ -125,12 +120,6 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="<?php echo ($menu['menu'] == 'store') ? 'current_section' : ''; ?>">
-                        <a href="<?php echo site_url('stores'); ?>">
-                            <span class="menu_icon"><i class="material-icons">store</i></span>
-                            <span class="menu_title"><?php echo lang('menu_stores_label'); ?></span>
-                        </a>
-                    </li>
                     <li class="<?php echo ($menu['menu'] == 'report') ? 'current_section' : ''; ?>">
                         <a href="<?php echo site_url('reports'); ?>">
                             <span class="menu_icon"><i class="material-icons">assessment</i></span>
@@ -138,10 +127,18 @@
                         </a>
                     </li>
                     <li class="<?php echo ($menu['menu'] == 'setting') ? 'current_section' : ''; ?>">
-                        <a href="<?php echo site_url('settings'); ?>">
+                        <a href="#">
                             <span class="menu_icon"><i class="material-icons">settings</i></span>
                             <span class="menu_title"><?php echo lang('menu_settings_label'); ?></span>
                         </a>
+                        <ul>
+                            <li class="<?php echo ($menu['menu'] == 'setting' && $menu['submenu'] == 'setting') ? 'act_item' : ''; ?>">
+                                <a href="<?php echo site_url('settings'); ?>"><?php echo lang('menu_settings_label'); ?></a>
+                            </li>
+                            <li class="<?php echo ($menu['menu'] == 'setting' && $menu['submenu'] == 'code') ? 'act_item' : ''; ?>">
+                                <a href="<?php echo site_url('settings/code'); ?>"><?php echo lang('menu_settings_code_label'); ?></a>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
             </div>
@@ -153,32 +150,6 @@
         </aside>
         <div id="page_content">
             <?php echo $output; ?>
-            <div class="uk-modal" id="modal-store">
-                <div class="uk-modal-dialog">
-                    <div class="uk-grid" data-uk-grid-margin>
-                        <div class="uk-width-medium-1-1">
-                            <p><?php echo lang('choose_store_subheading'); ?></p>
-                        </div>
-                    </div>
-                    <div class="uk-grid" data-uk-grid-margin>
-                        <div class="uk-width-medium-1-1">
-                            <label><?php echo lang('choose_store_heading'); ?></label>
-                            <select id="select-store" class="md-input">
-                                <?php
-                                if ($stores) {
-                                    foreach ($stores->result() as $store) {
-                                        echo '<option value="' . encode($store->id) . '">' . $store->name . '</option>';
-                                    }
-                                }
-                                ?>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="uk-modal-footer uk-text-right">
-                        <button type="button" id="change-store" class="md-btn md-btn-flat md-btn-flat-primary"><?php echo lang('action_choose_button'); ?></button>
-                    </div>
-                </div>
-            </div>
         </div>
 
         <!-- google web fonts -->

@@ -15,6 +15,7 @@ $lang['product_store_label'] = 'Toko';
 $lang['product_image_label'] = 'Gambar';
 $lang['product_code_label'] = 'Kode';
 $lang['product_name_label'] = 'Nama';
+$lang['product_description_label'] = 'Deskripsi';
 $lang['product_cost_label'] = 'Harga Beli';
 $lang['product_price_label'] = 'Harga Jual';
 $lang['product_stock_label'] = 'Stok';

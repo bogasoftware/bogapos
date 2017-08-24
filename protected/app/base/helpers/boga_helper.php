@@ -44,157 +44,97 @@ if (!function_exists('encrypt_decrypt')) {
 
 }
 
-if (!function_exists('number')) {
-
-    function number($val) {
-        $value = number_format($val, 0, ',', '.');
-        return $value;
-    }
-
+function number($val) {
+    $value = number_format($val, settings('number_of_decimal'), settings('separator_decimal'), settings('separator_thousand'));
+    return $value;
 }
 
-if (!function_exists('date_indo')) {
-
-    function date_indo($fulldate) {
-        $date = substr($fulldate, 8, 2);
-        $month = get_month(substr($fulldate, 5, 2));
-        $year = substr($fulldate, 0, 4);
-        return $date . ' ' . $month . ' ' . $year;
+function parse_number($number, $dec_point = null) {
+    $dec_point = settings('separator_decimal');
+    if (empty($dec_point)) {
+        $locale = localeconv();
+        $dec_point = $locale['decimal_point'];
     }
-
+    return floatval(str_replace($dec_point, '.', preg_replace('/[^\d' . preg_quote($dec_point) . ']/', '', $number)));
 }
 
-if (!function_exists('date_simple')) {
-
-    function date_simple($fulldate) {
-        $date = substr($fulldate, 8, 2);
-        $month = substr($fulldate, 5, 2);
-        $year = substr($fulldate, 0, 4);
-        return $date . '-' . $month . '-' . $year;
-    }
-
+function get_date($date) {
+    $format = settings('date_format');
+    $timestamp = strtotime($date);
+    return date($format, $timestamp);
 }
 
-if (!function_exists('normal_date')) {
-
-    function normal_date($fulldate) {
-        $date = substr($fulldate, 8, 2);
-        $month = get_month3(substr($fulldate, 5, 2));
-        $year = substr($fulldate, 0, 4);
-        return $date . '/' . $month . '/' . $year;
-    }
-
+function get_date_mysql($date) {
+    return date_format(date_create_from_format(settings('date_format'), $date), 'Y-m-d');
 }
 
-if (!function_exists('date_time')) {
-
-    function date_time($fulldate) {
-        $date = substr($fulldate, 8, 2);
-        $month = get_month3(substr($fulldate, 5, 2));
-        $year = substr($fulldate, 0, 4);
-        $time = substr($fulldate, 11, 5);
-        return $date . '/' . $month . '/' . $year . ' ' . $time;
-    }
-
+function get_month($month) {
+    $CI = get_instance();
+    return $CI->lang->line($month);
 }
 
-if (!function_exists('mysql_date')) {
-
-    function mysql_date($fulldate) {
-        $date = substr($fulldate, 0, 2);
-        $month = get_month2(substr($fulldate, 3, 3));
-        $year = substr($fulldate, 7, 4);
-        return $year . '-' . $month . '-' . $date;
+function trx_code($type) {
+    $CI = get_instance();
+    $CI->load->database();
+    $format = settings('code_format_' . $type);
+    if ($type == 'cash_in') {
+        $table = 'cash';
+        $CI->db->where('type', 'in');
+    } elseif ($type == 'cash_out') {
+        $table = 'cash';
+        $CI->db->where('type', 'out');
+    } elseif ($type == 'pos') {
+        $table = 'sales';
+        $CI->db->where('pos', 1);
+    } else {
+        $table = $type;
     }
-
-}
-
-if (!function_exists('get_month')) {
-
-    function get_month($month) {
-        $CI = get_instance();
-        return $CI->lang->line($month);
+    $month = date('m');
+    $year = date('y');
+    $my = $month . $year;
+    $in = $CI->db->where('YEAR(date)', date('Y'))->count_all_results($table);
+    $in = ($in == 0) ? 1 : $in + 1;
+    if ($in < 10) {
+        $in = '000' . $in;
+    } elseif ($in < 100) {
+        $in = '00' . $in;
+    } elseif ($in < 1000) {
+        $in = '0' . $in;
     }
-
-}
-
-if (!function_exists('trx_code')) {
-
-    function trx_code($store, $type, $trx) {
-        $CI = get_instance();
-        $CI->load->database();
-        $month = date('m');
-        $year = date('y');
-        $ym = $trx . '/' . $store . '/' . $month . $year;
-        $j = strlen($ym);
-        $CI->db->select('MAX(SUBSTR(code,-4)) count', FALSE)
-                ->where('SUBSTR(code,1,' . $j . ')', $ym);
-        $query = $CI->db->get($type);
-        if ($query->num_rows() > 0)
-            $count = $query->row()->count;
-
-        $count = ($count == NULL) ? 1 : $count + 1;
-        if ($count < 10) {
-            $count = '000' . $count;
-        } elseif ($count < 100) {
-            $count = '00' . $count;
-        } elseif ($count < 1000) {
-            $count = '0' . $count;
-        }
-        return $ym . '/' . $count;
-    }
-
-}
-
-if (!function_exists('get_number')) {
-
-    function get_number($string) {
-        return str_replace('.', '', $string);
-    }
-
-}
-
-if (!function_exists('send_email')) {
-
-    function smtp_send_email($from, $to, $subject, $message) {
-        $CI = get_instance();
-        $CI->load->library('email');
-        $CI->email->initialize(array(
-            'protocol' => 'smtp',
-            'smtp_host' => 'smtp.sendgrid.net',
-            'smtp_user' => 'rifkysya',
-            'smtp_pass' => '121fkysyaripudin',
-            'smtp_port' => 587,
-            'crlf' => "\r\n",
-            'newline' => "\r\n",
-            'mailtype' => 'html'
-        ));
-        $CI->email->from($from);
-        $CI->email->to($to);
-        $CI->email->subject($subject);
-        $CI->email->message($message);
-
-        $CI->email->send();
-    }
-
+    $code = str_replace('[IN]', $in, $format);
+    $code = str_replace('[MONTH]', $month, $code);
+    $code = str_replace('[YEAR]', $year, $code);
+    $code = str_replace('[MY]', $my, $code);
+    return $code;
 }
 
 function settings($key) {
     if ($key) {
         $CI = get_instance();
-        $CI->load->database();
-        $query = $CI->db->get_where('settings', array('key' => $key));
-        if ($query->num_rows() > 0) {
-            return $query->row()->value;
+        $CI->load->driver('cache', array('adapter' => 'apc', 'backup' => 'file'));
+        if ($CI->cache->get('settings')) {
+            return $CI->cache->get('settings')[$key];
         } else {
-            return false;
+            $CI->load->database();
+            $settings = $CI->db->get('settings');
+            foreach ($settings->result() as $setting) {
+                $data[$setting->key] = $setting->value;
+            }
+            $CI->cache->save('settings', $data, 7200);
+            return $data[$key];
+            $query = $CI->db->get_where('settings', array('key' => $key));
+            if ($query->num_rows() > 0) {
+                return $query->row()->value;
+            } else {
+                return false;
+            }
         }
     } else {
         return false;
     }
 }
 
-function remove_space($string){
+function remove_space($string) {
     return str_replace(' ', '', $string);
 }
 

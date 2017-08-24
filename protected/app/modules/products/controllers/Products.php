@@ -21,7 +21,7 @@ class Products extends CI_Controller {
         $this->template->_default();
         $this->template->table();
         $this->template->form();
-        $this->load->js('assets/js/modules/products/products.min.js');
+        $this->load->js('assets/js/modules/products/products.js');
 
         $this->output->set_title(lang('product_title'));
         $this->load->view('products', $this->data);
@@ -39,7 +39,7 @@ class Products extends CI_Controller {
         $headers = array('', lang('product_image_label'), lang('product_code_label'), lang('product_name_label'), lang('product_cost_label'), lang('product_price_label'), lang('product_stock_label'));
         $rows = array();
 
-        $datas = $this->products->get_all($this->session->userdata('store')->id, $page, $size, $filter, $sort);
+        $datas = $this->products->get_all($page, $size, $filter, $sort);
         if ($datas) {
             foreach ($datas->result() as $data) {
                 $row = array(
@@ -51,8 +51,8 @@ class Products extends CI_Controller {
                 $row[remove_space(lang('product_image_label'))] = '<td class="uk-text-center"><a href="' . $data->image . '" data-uk-lightbox=""><img class="md-user-image" src="' . $data->image . '"></a></td>';
                 $row[remove_space(lang('product_code_label'))] = $data->code;
                 $row[remove_space(lang('product_name_label'))] = $data->name;
-                $row[remove_space(lang('product_cost_label'))] = '<td class="uk-text-right">' . rupiah($data->cost) . '</td>';
-                $row[remove_space(lang('product_price_label'))] = '<td class="uk-text-right">' . rupiah($data->price) . '</td>';
+                $row[remove_space(lang('product_cost_label'))] = '<td class="uk-text-right">' . number($data->cost) . '</td>';
+                $row[remove_space(lang('product_price_label'))] = '<td class="uk-text-right">' . number($data->price) . '</td>';
                 $row[remove_space(lang('product_stock_label'))] = '<td class="uk-text-right">' . number($data->quantity) . '</td>';
                 array_push($rows, $row);
             }
@@ -61,15 +61,6 @@ class Products extends CI_Controller {
         $output['headers'] = $headers;
         $output['rows'] = $rows;
         echo json_encode($output);
-    }
-
-    public function get_store_quantity($method = 'add', $product = 0) {
-        $this->input->is_ajax_request() or exit('No direct post submit allowed!');
-
-        $product = ($product != 0) ? decode($product) : 0;
-        $this->data['stores'] = $this->products->get_store_quantity($product);
-        $this->data['method'] = $method;
-        $this->load->view('product_store_quantity', $this->data);
     }
 
     public function get($id) {
@@ -91,7 +82,7 @@ class Products extends CI_Controller {
         $this->form_validation->set_rules('cost', 'lang:product_cost_label', 'trim|required|numeric');
         $this->form_validation->set_rules('price', 'lang:product_price_label', 'trim|required|numeric');
         $this->form_validation->set_rules('image', 'lang:product_image_label', 'trim');
-        $this->form_validation->set_rules('quantity[]', 'lang:product_stock_label', 'trim|numeric');
+        $this->form_validation->set_rules('quantity', 'lang:product_stock_label', 'trim|numeric');
 
         //validate the form
         if ($this->form_validation->run() === true) {
@@ -100,8 +91,10 @@ class Products extends CI_Controller {
             $method = $data['save_method'];
             unset($data['save_method']);
 
-            if ($method == 'edit')
+            if ($method == 'edit'){
                 $data['id'] = decode($data['id']);
+                unset($data['quantity']);
+            }
             do {
                 if (isset($_FILES['image']['name']) != null) {
                     $config['upload_path'] = './files/product/';
@@ -126,16 +119,7 @@ class Products extends CI_Controller {
                 }
 
                 if ($method == 'add') {
-                    $quantity = $data['quantity'];
-                    unset($data['quantity']);
-
                     $save = $this->main->insert('products', $data);
-                    $total_qty = 0;
-                    foreach ($quantity as $store => $qty) {
-                        $total_qty = $total_qty + $qty;
-                        $this->main->insert('product_store', array('product' => $save, 'store' => $store, 'quantity' => $qty));
-                    }
-                    $this->main->update('products', array('quantity' => $total_qty), array('id' => $save));
                 } else if ($method == 'edit') {
                     $save = $this->main->update('products', $data, array('id' => $data['id']));
                 }

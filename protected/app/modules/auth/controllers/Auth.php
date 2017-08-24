@@ -19,18 +19,6 @@ class Auth extends CI_Controller {
             if ($this->form_validation->run() == true) {
                 $remember = (bool) $this->input->post('remember');
                 if ($this->ion_auth->login($this->input->post('identity'), $this->input->post('password'), $remember)) {
-                    $user = $this->ion_auth->user()->row();
-                    if ($user->store != 0) {
-                        $this->session->set_userdata('store', $this->main->get('stores', array('id' => $user->store)));
-                    } else {
-                        $stores = $this->main->gets('stores');
-                        if ($stores->num_rows() > 1) {
-                            $data = (object) array('id' => 'all', 'name' => lang('choose_store_all_label'));
-                            $this->session->set_userdata('store', $data);
-                        } else {
-                            $this->session->set_userdata('store', $stores->row());
-                        }
-                    }
                     $return = array('message' => $this->ion_auth->messages(), 'status' => 'success');
                 } else {
                     $return = array('message' => $this->ion_auth->errors(), 'status' => 'danger');
@@ -57,17 +45,17 @@ class Auth extends CI_Controller {
 
         $this->data['menu'] = array('menu' => 'profile', 'submenu' => '');
 
-        $this->output->set_title('Pengaturan Akun - Bogatoko');
+        $this->output->set_title(lang('account_setting_title'));
         $this->load->view('profile', $this->data);
     }
 
     public function update_profile() {
         $this->input->is_ajax_request() or exit('No direct post submit allowed!');
 
-        $this->form_validation->set_rules('fullname', 'Nama Lengkap', 'trim|required');
-        $this->form_validation->set_rules('phone', 'Handphone', 'trim|required');
-        $this->form_validation->set_rules('password_old', 'Password', 'trim');
-        $this->form_validation->set_rules('password', 'Password', 'trim|min_length[6]');
+        $this->form_validation->set_rules('fullname', 'lang:account_fullname_label', 'trim|required');
+        $this->form_validation->set_rules('phone', 'lang:account_phone_label', 'trim');
+        $this->form_validation->set_rules('password_old', 'lang:account_old_password_label', 'trim');
+        $this->form_validation->set_rules('password', 'lang:account_new_password_label', 'trim|min_length[6]');
 
         //validate the form
         if ($this->form_validation->run() === true) {
@@ -78,25 +66,21 @@ class Auth extends CI_Controller {
             do {
                 if ($data['password']) {
                     if (!$data['password_old']) {
-                        $return = array('message' => "Untuk merubah password silahkan isi password lama Anda.", 'status' => 'danger');
+                        $return = array('message' => lang('account_old_password_warning_message'), 'status' => 'danger');
                         break;
                     } else {
                         if (!$this->ion_auth->change_password($email, $data['password_old'], $data['password'])) {
-                            $return = array('message' => "Password lama yang dimasukkan salah.", 'status' => 'danger');
+                            $return = array('message' => lang('account_old_password_error_message'), 'status' => 'danger');
                             break;
                         }
                     }
                 }
                 unset($data['password']);
                 unset($data['password_old']);
-                $save = $this->main->update('users', $data, array('id' => $this->ion_auth->get_user_id()));
-//                if ($save) {
+                $save = $this->main->update('auth_users', $data, array('id' => $this->ion_auth->get_user_id()));
                 $this->data['user']->fullname = $data['fullname'];
                 $this->data['user']->phone = $data['phone'];
-                $return = array('message' => "Akun berhasil diperbaharui.", 'status' => 'success');
-//                } else {
-//                    $return = array('message' => "Akun gagal disimpan.", 'status' => 'danger');
-//                }
+                $return = array('message' => lang('account_update_success_message'), 'status' => 'success');
             } while (0);
         } else {
             $return = array('message' => validation_errors(), 'status' => 'danger');

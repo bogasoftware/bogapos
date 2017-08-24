@@ -23,11 +23,11 @@ class Home extends CI_Controller {
         $this->load->js('assets/components/d3/d3.min.js');
         $this->load->js('assets/components/c3js-chart/c3.min.js');
         $this->load->js('assets/js/modules/home.js');
-        $this->data['sales'] = $this->home->sales($this->session->userdata('store')->id);
-        $this->data['purchase'] = $this->home->purchase($this->session->userdata('store')->id);
+        $this->data['sales'] = $this->home->sales();
+        $this->data['purchase'] = $this->home->purchase();
 
-        $profit_loss = $this->profit_loss->total_this_month($this->session->userdata('store')->id);
-        $this->data['profit_loss'] = ($profit_loss) ? $profit_loss->sales - $profit_loss->cost - $profit_loss->shipping_cost : 0;
+        $profit_loss = $this->profit_loss->total_this_month();
+        $this->data['profit_loss'] = ($profit_loss) ? $profit_loss->sales - $profit_loss->cost - $profit_loss->expense - $profit_loss->shipping_cost : 0;
 
         $this->output->set_title(lang('home_title'));
         $this->load->view('home', $this->data);
@@ -36,7 +36,7 @@ class Home extends CI_Controller {
     public function sales_chart() {
         $this->input->is_ajax_request() or exit('No direct post submit allowed!');
         for ($i = 1; $i <= 12; $i++) {
-            $data[] = $this->home->sales_purchase(($i < 10 ? '0' . $i : $i), $this->session->userdata('store')->id);
+            $data[] = $this->home->sales_purchase(($i < 10 ? '0' . $i : $i));
         }
 
         echo json_encode($data);
