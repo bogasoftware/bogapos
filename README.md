@@ -9,8 +9,8 @@ Bogapos is a fast and light point of sales. Based on a powerful codeigniter as a
 ## Features
 
 * Simply for manage products
-* Manage sales per store
-* Manage purchases per store
+* Manage sales 
+* Manage purchases
 * Multi language (For now, just Bahasa Indonesia and English)
 * Customer & Supplier data
 * Reporting sales, purchase, and profit loss
