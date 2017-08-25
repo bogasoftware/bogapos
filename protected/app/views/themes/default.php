@@ -144,7 +144,8 @@
             </div>
             <div class="uk-grid uk-margin">
                 <div class="uk-width-1-1 uk-text-center">
-                    BogaPOS <?php echo VERSION; ?>
+                    BogaPOS <?php echo VERSION; ?><br>
+					Dev by <a href="https://bogasoftware.com">Bogasoftware</a>
                 </div>
             </div>
         </aside>
