@@ -18,7 +18,6 @@ $lang['product_name_label'] = 'Name';
 $lang['product_description_label'] = 'Description';
 $lang['product_cost_label'] = 'Cost';
 $lang['product_price_label'] = 'Price';
-$lang['product_category_label'] = 'Select Category';
 $lang['product_stock_label'] = 'Stock';
 
 $lang['product_upload_image_failed_message'] = "Image upload failed.";
