@@ -40,11 +40,39 @@
         </div>
     </div>
 </div>
-<div class="md-fab-wrapper">
-    <a class="md-fab md-fab-accent" href="#" id="btn-add">
-        <i class="material-icons">&#xE145;</i>
-    </a>
+
+    <div class="md-fab-wrapper md-fab-in-card md-fab-speed-dial">
+         <a class="md-fab md-fab-primary" href="javascript:void(0)"><i class="material-icons">&#xE145;</i></a>
+            <div class="md-fab-wrapper-small">
+                <a class="md-fab md-fab-small md-fab-warning" id="btn-add"><i class="material-icons">&#xE89C;</i></a>
+                <a class="md-fab md-fab-small md-fab-success" id="btn-import"><i class="material-icons">&#xE2C3;</i></a>
+            </div>  
+    </div>
+
+
+<div class="uk-modal" id="modal-import">
+    <div class="uk-modal-dialog">
+        <div class="uk-modal-header">
+            <h3 class="uk-modal-title">Import Data</h3>
+        </div>        
+        <form class="uk-form-stacked" id="form" action="<?php echo current_url(); ?>/import" method="post" enctype="multipart/form-data">
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-medium-1-1">
+                   <input type="file" id="import_data" name="import_data" class="dropify" data-height="100"/>
+                </div>
+            </div>
+
+
+            <div class="uk-modal-footer uk-text-right">
+                <button type="button" class="md-btn md-btn-flat uk-modal-close">Batal</button>
+                <button type="submit" class="md-btn md-btn-flat md-btn-flat-primary">Import</button>
+            </div>
+        </form>
+    </div>
 </div>
+
+
+
 <div class="uk-modal" id="modal-form">
     <div class="uk-modal-dialog">
         <button type="button" class="uk-modal-close uk-close"></button>
@@ -89,8 +117,19 @@
                     </div>
                 </div>
             </div>
-            <div class="uk-grid" data-uk-grid-margin id="quantity-form">
-                <div class="uk-width-medium-1-1">
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-medium-2-3">
+                    <div class="parsley-row">
+                        <select id="categories" class="md-input" data-uk-tooltip="{pos:'top'}" name="category" title="<?php echo lang('product_category_label'); ?>">
+                            <option value="0" selected hidden><?php echo lang('product_category_label'); ?></option>
+                            <?php foreach($categories as $category){ ?>
+                            <option value="<?php echo $category['id']; ?>"><?php echo $category['name']; ?></option>
+                            <?php }?>
+                        </select>
+                        <span class="uk-form-help-block"><?php echo lang('product_category_label'); ?></span>
+                    </div>
+                </div>
+                <div class="uk-width-medium-1-3" id="quantity-form">
                     <div class="parsley-row">
                         <label for="quantity"><?php echo lang('product_stock_label'); ?></label>
                         <input type="text" name="quantity" id="quantity" class="md-input" />

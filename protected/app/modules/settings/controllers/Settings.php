@@ -15,7 +15,9 @@ class Settings extends CI_Controller {
     }
 
     public function index() {
+        $this->load->css('assets/skins/dropify/css/dropify.css');
         $this->template->_default();
+        $this->load->js('assets/skins/dropify/dropify.min.js');
         $this->template->form();
 
         $this->output->set_title(lang('setting_title'));
@@ -48,6 +50,30 @@ class Settings extends CI_Controller {
 
         if ($this->form_validation->run() === true) {
             $data = $this->input->post(null, true);
+
+                if (isset($_FILES['store_logo']['name']) != null) {
+                    $config['upload_path'] = './files/image/logo/';
+                    $config['allowed_types'] = "gif|jpg|png|jpeg|bmp|jpeg2";
+                    $config['max_size'] = 2048;
+                    if (!file_exists($config['upload_path'])) {
+                        mkdir($config['upload_path']);
+                    }
+
+                    $this->load->library('upload', $config);
+                    $this->upload->initialize($config);
+                    if (!$this->upload->do_upload('store_logo')) {
+                        $return = array('message' => $this->upload->display_errors(), 'status' => 'danger');
+                    } else {
+                            $data_exist = $this->main->get('settings', array('key' => 'store_logo'));
+                            if (file_exists($data_exist->value)) {
+                                unlink($data_exist->value);
+                            }
+                        $data['store_logo'] = $config['upload_path'] . $this->upload->data('file_name');
+                    }
+
+                } else {
+                    unset($data['store_logo']);
+                }
 
             foreach ($data as $key => $value) {
                 $settings[] = array(

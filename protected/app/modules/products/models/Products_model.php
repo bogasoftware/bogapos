@@ -54,4 +54,10 @@ class Products_model extends CI_Model {
         return $query->row()->count;
     }
 
+    function get_categories(){
+        $this->db->where("status", 0);
+        $this->db->order_by('id', 'DESC');
+        return $query = $this->db->get("product_categories")->result_array();       
+    }
+
 }

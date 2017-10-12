@@ -42,7 +42,7 @@
             <div class="header_main_content">
                 <nav class="uk-navbar">
                     <div class="main_logo_top">
-                        <a href="<?php echo site_url(); ?>"><img src="<?php echo site_url('assets/img/logo_main_white.png'); ?>" alt="" height="15" width="71"/></a>
+                        <a href="<?php echo site_url(); ?>"><img src="<?php echo $settings->store_logo; ?>" alt="" height="15" width="71"/></a>
                     </div>
 
                     <!-- main sidebar switch -->
@@ -83,12 +83,22 @@
                             <span class="menu_title"><?php echo lang('menu_dashboard_label'); ?></span>
                         </a>
                     </li>
-                    <li class="<?php echo ($menu['menu'] == 'product') ? 'current_section' : ''; ?>">
-                        <a href="<?php echo site_url('products'); ?>">
+                    <li>
+                        <a href="#">
                             <span class="menu_icon"><i class="material-icons">watch</i></span>
                             <span class="menu_title"><?php echo lang('menu_products_label'); ?></span>
                         </a>
+                        <ul>
+                            <li class="<?php echo ($menu['menu'] == 'product' && $menu['submenu'] == 'product') ? 'act_item' : ''; ?>">
+                                <a href="<?php echo site_url('products'); ?>"><?php echo lang('menu_products_label'); ?></a>
+                            </li>
+                            <li class="<?php echo ($menu['menu'] == 'product' && $menu['submenu'] == 'categories') ? 'act_item' : ''; ?>">
+                                <a href="<?php echo site_url('products/categories'); ?>"><?php echo lang('menu_categories_label'); ?></a>
+                            </li>
+
+                        </ul>
                     </li>
+
                     <li>
                         <a href="#">
                             <span class="menu_icon"><i class="material-icons">shopping_cart</i></span>

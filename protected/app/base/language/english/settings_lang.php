@@ -8,6 +8,7 @@ $lang['setting_title'] = 'Settings';
 $lang['setting_name_label'] = 'Store Name';
 $lang['setting_address_label'] = 'Address';
 $lang['setting_phone_label'] = 'Telephone';
+$lang['setting_logo_label'] = 'Logo';
 $lang['setting_default_customer_label'] = 'Default Customer';
 $lang['setting_default_supplier_label'] = 'Default Supplier';
 $lang['setting_language_label'] = 'Language';
