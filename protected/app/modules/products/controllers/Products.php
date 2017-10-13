@@ -14,14 +14,19 @@ class Products extends CI_Controller {
 
         $this->load->model('products_model', 'products');
 
-        $this->data['menu'] = array('menu' => 'product', 'submenu' => '');
+        $this->data['menu'] = array('menu' => 'product', 'submenu' => 'product');
     }
 
     public function index() {
+        $this->load->css('assets/skins/dropify/css/dropify.css');
         $this->template->_default();
         $this->template->table();
+        $this->load->js('assets/skins/dropify/dropify.min.js');
         $this->template->form();
         $this->load->js('assets/js/modules/products/products.js');
+
+
+        $this->data['categories'] = $this->products->get_categories();
 
         $this->output->set_title(lang('product_title'));
         $this->load->view('products', $this->data);
@@ -82,6 +87,7 @@ class Products extends CI_Controller {
         $this->form_validation->set_rules('cost', 'lang:product_cost_label', 'trim|required|numeric');
         $this->form_validation->set_rules('price', 'lang:product_price_label', 'trim|required|numeric');
         $this->form_validation->set_rules('image', 'lang:product_image_label', 'trim');
+        $this->form_validation->set_rules('category', 'lang:product_category_label', 'trim|required');
         $this->form_validation->set_rules('quantity', 'lang:product_stock_label', 'trim|numeric');
 
         //validate the form
@@ -98,22 +104,27 @@ class Products extends CI_Controller {
             do {
                 if (isset($_FILES['image']['name']) != null) {
                     $config['upload_path'] = './files/product/';
-                    $config['allowed_types'] = 'gif|jpg|png|jpeg|bmp';
-                    $config['max_size'] = 200;
+                    $config['allowed_types'] = "gif|jpg|png|jpeg|bmp";
+                    $config['max_size'] = 2048;
                     if (!file_exists($config['upload_path'])) {
                         mkdir($config['upload_path']);
                     }
-                    if ($method == 'edit') {
-                        $data_exist = $this->main->get('products', array('id' => $data['id']));
-                        if ($data_exist->image)
-                            unlink($data_exist->image);
-                    }
+
                     $this->load->library('upload', $config);
+                    $this->upload->initialize($config);
                     if (!$this->upload->do_upload('image')) {
                         $return = array('message' => lang('product_upload_image_failed_message') . "<br>" . $this->upload->display_errors(), 'status' => 'danger');
                         break;
+                    } else {
+                        $data['image'] = $config['upload_path'] . $this->upload->data('file_name');
+                        if ($method == 'edit') {
+                            $data_exist = $this->main->get('products', array('id' => $data['id']));
+                            if (file_exists($data_exist->image)) {
+                                unlink($data_exist->image);
+                            }
+                        }
                     }
-                    $data['image'] = $config['upload_path'] . $this->upload->data('file_name');
+
                 } else {
                     unset($data['image']);
                 }
@@ -131,6 +142,104 @@ class Products extends CI_Controller {
         }
         echo json_encode($return);
     }
+
+
+
+
+
+    public function import(){
+        $this->input->is_ajax_request() or exit('No direct post submit allowed!');
+        
+        $this->form_validation->set_rules('import_data', 'Import Data', 'trim');
+        
+        
+        if ($this->form_validation->run() == true) {
+            do {
+                if ($_FILES['import_data']['name'] != null) {
+
+                    $config['upload_path']   = './files/product/import/';
+                    $config['allowed_types'] = 'xls|xlsx';
+                    $config['max_size']      = '10000';
+                    $this->load->library('upload', $config);
+                    $this->upload->initialize($config);
+                    
+                    
+                    $inputFileName = $config['upload_path'] . $_FILES['import_data']['name'];
+                    if (file_exists($inputFileName)) {
+                        unlink($inputFileName);
+                    }
+
+                    if (!$this->upload->do_upload('import_data')) {
+                        $return = array(
+                            'message' => $this->upload->display_errors(),
+                            'status' => 'danger'
+                        );
+                        break;
+                    } else {
+                        $media         = $this->upload->data();
+                        $inputFileName = $config['upload_path'] . $media['file_name'];
+                        
+                        $this->load->library('PHPExcel');
+                        $this->load->library('PHPExcel/IOFactory');
+                        try {
+                            $inputFileType = IOFactory::identify($inputFileName);
+                            $objReader     = IOFactory::createReader($inputFileType);
+                            $objPHPExcel   = $objReader->load($inputFileName);
+                        }
+                        catch (Exception $e) {
+                            $return = array(
+                                'message' => 'Error loading file "' . pathinfo($inputFileName, PATHINFO_BASENAME) . '": ' . $e->getMessage(),
+                                'status' => 'danger'
+                            );
+                            break;
+                        }
+                        $sheet         = $objPHPExcel->getSheet(0);
+                        $highestRow    = $sheet->getHighestRow();
+                        $highestColumn = $sheet->getHighestColumn();
+                        do {
+                            if ($highestRow > 0) {
+                                for ($row = 2; $row <= $highestRow; $row++) {
+                                    $rowData = $sheet->rangeToArray('A' . $row . ':' . $highestColumn . $row, NULL, TRUE, FALSE);
+                                    if ($rowData[0][0] != '' && $rowData[0][6] != '') {
+                                        $data['code']    = $rowData[0][0];
+                                        $data['name']    = $rowData[0][1];
+                                        $data['description']    = $rowData[0][2];
+                                        $data['quantity']    = $rowData[0][3];
+                                        $data['image']    = $rowData[0][4];
+                                        $data['price']    = $rowData[0][5];
+                                        $data['cost']    = $rowData[0][6];
+                                        
+                                        $this->main->insert('products', $data);
+                                        
+                                    }
+                                }
+                                $return = array(
+                                    'message' => 'Data Fields berhasil di Import.',
+                                    'status' => 'success'
+                                );
+                            }
+                        } while (0);
+                    }
+                } else {
+                    $return = array(
+                        'message' => 'Tidak ada file yang diupload.',
+                        'status' => 'danger'
+                    );
+                }
+            } while (0);
+        } else {
+            $return = array(
+                'message' => validation_errors(),
+                'status' => 'danger'
+            );
+        }
+        echo json_encode($return);
+        
+    }
+
+
+
+
 
     public function delete($id) {
         $this->input->is_ajax_request() or exit('No direct post submit allowed!');

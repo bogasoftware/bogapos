@@ -32,3 +32,5 @@ $('body').on('submit', '#form', function (e) {
     });
     return false;
 });
+
+$('.dropify').dropify();
