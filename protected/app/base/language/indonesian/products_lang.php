@@ -21,6 +21,17 @@ $lang['product_price_label'] = 'Harga Jual';
 $lang['product_category_label'] = 'Pilih Kategori';
 $lang['product_stock_label'] = 'Stok';
 
+
+
+$lang['product_error_loading_file_label'] = 'Error loading file ';
+$lang['product_import_success_label'] = 'Data berhasil di Import.';
+$lang['product_no_file_upload_label'] = 'Tidak ada File yang diupload.';
+
+$lang['product_import_label'] = 'Import Produk Data';
+$lang['product_download_example_label'] = 'Unduh Contoh Data';
+
+
+
 $lang['product_upload_image_failed_message'] = "Upload gambar gagal.";
 $lang['product_save_success_message'] = "Produk '%s' berhasil disimpan.";
 $lang['product_delete_success_message'] = "Produk '%s' berhasil dihapus.";

@@ -118,7 +118,7 @@
                 <div class="uk-width-medium-1-1">
                     <div class="uk-form-row parsley-row">
                         <label for="image" class="uk-form-label"><?php echo lang('product_image_label'); ?></label>
-                        <input type="file" id="image" name="image" class="dropify" data-height="100" data-max-file-size="3M" data-allowed-file-extensions="jpeg png jpg bmp gif"/>
+                        <input type="file" id="image" name="image" class="dropify" data-height="100" data-max-file-size="3M" data-allowed-file-extensions="jpeg png jpg bmp gif" data-default-file=""/>
                     </div>
                 </div>
                 <img id="image-image" style="height: 50px;" />
@@ -138,19 +138,24 @@
 <div class="uk-modal" id="modal-import">
     <div class="uk-modal-dialog">
         <div class="uk-modal-header">
-            <h3 class="uk-modal-title">Import Data</h3>
+            <h3 class="uk-modal-title"><?php echo lang('product_import_label'); ?></h3>
         </div>        
-        <form class="uk-form-stacked" id="form" action="<?php echo current_url(); ?>/import" method="post" enctype="multipart/form-data">
+        <form class="uk-form-stacked" id="form-import" action="<?php echo current_url(); ?>/import" method="post" enctype="multipart/form-data">
+            <input type="hidden" id="save_method" name="save_method">
             <div class="uk-grid" data-uk-grid-margin>
                 <div class="uk-width-medium-1-1">
                    <input type="file" id="import_data" name="import_data" class="dropify" data-height="100"/>
                 </div>
+                <div class="uk-width-medium-1-1 uk-margin-top">
+                    <div class="uk-form-row parsley-row">
+                        <a href="<?php echo site_url('files/excel/example_product_import.xlsx'); ?>" target="_blank" class="md-btn md-btn-success md-btn-block md-btn-icon"><i class="uk-icon-cloud-download"></i><?php echo lang('product_download_example_label'); ?></a>
+                    </div>
+                </div>
             </div>
 
-
             <div class="uk-modal-footer uk-text-right">
-                <button type="button" class="md-btn md-btn-flat uk-modal-close">Batal</button>
-                <button type="submit" class="md-btn md-btn-flat md-btn-flat-primary">Import</button>
+                <button type="button" class="md-btn md-btn-flat uk-modal-close"><?php echo lang('action_cancel_button'); ?></button>
+                <button type="submit" class="md-btn md-btn-flat md-btn-flat-primary"><?php echo lang('action_submit_button'); ?></button>
             </div>
         </form>
     </div>

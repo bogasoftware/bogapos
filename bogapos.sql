@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 13, 2017 at 09:53 AM
+-- Generation Time: Oct 13, 2017 at 12:19 PM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `bogasoftware_bogapos`
+-- Database: `bogapos`
 --
 
 -- --------------------------------------------------------
@@ -83,7 +83,7 @@ CREATE TABLE `auth_users` (
 --
 
 INSERT INTO `auth_users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `fullname`, `phone`, `image`, `store`) VALUES
-(1, '127.0.0.1', 'administrator', '$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36', '', 'admin@admin.com', '', NULL, NULL, NULL, 1268889823, 1507877967, 1, 'Owner', '21', '', 0);
+(1, '127.0.0.1', 'administrator', '$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36', '', 'admin@admin.com', '', NULL, NULL, NULL, 1268889823, 1507889791, 1, 'Owner', '21', '', 0);
 
 -- --------------------------------------------------------
 
@@ -161,10 +161,10 @@ CREATE TABLE `products` (
   `name` varchar(255) NOT NULL,
   `description` text,
   `quantity` int(7) NOT NULL DEFAULT '0',
-  `image` varchar(255) DEFAULT NULL,
-  `category` int(11) DEFAULT NULL,
-  `price` double NOT NULL DEFAULT '0',
+  `image` varchar(255) DEFAULT './files/images/no_image_available.png',
+  `category` int(11) NOT NULL DEFAULT '1',
   `cost` double NOT NULL DEFAULT '0',
+  `price` double NOT NULL DEFAULT '0',
   `weight` float NOT NULL DEFAULT '0',
   `minimum` int(11) NOT NULL DEFAULT '1',
   `status` tinyint(1) NOT NULL DEFAULT '1',
@@ -325,18 +325,19 @@ INSERT INTO `settings` (`id`, `key`, `value`) VALUES
 (6, 'store_name', 'HIJITOKO'),
 (7, 'store_address', 'zzzzzzzz'),
 (8, 'store_phone', '23123'),
-(9, 'store_logo', './files/image/logo/logo_main_white1.png'),
+(9, 'store_logo', './files/images/logo_main_white.png'),
 (10, 'duedate_payment', '10'),
 (11, 'number_of_decimal', '2'),
 (12, 'code_format_sales', 'SL/[IN]/[MONTH]/[YEAR]'),
-(13, 'code_format_purchases', 'PC/[IN]/[MONTH]/[YEAR]'),
-(14, 'code_format_pos', 'POS/[IN]/[MONTH]/[YEAR]'),
-(15, 'code_format_cash_in', 'CI/[IN]/[MONTH]/[YEAR]'),
-(16, 'code_format_cash_out', 'CO/[IN]/[MONTH]/[YEAR]'),
-(17, 'separator_decimal', '.'),
-(18, 'separator_thousand', ','),
-(19, 'date_format', 'd/m/Y'),
-(20, 'date_format_uk', 'DD/MM/YYYY');
+(13, 'code_format_sale_shipping', 'SP/[IN]/[MONTH]/[YEAR]'),
+(14, 'code_format_purchases', 'PC/[IN]/[MONTH]/[YEAR]'),
+(15, 'code_format_pos', 'POS/[IN]/[MONTH]/[YEAR]'),
+(16, 'code_format_cash_in', 'CI/[IN]/[MONTH]/[YEAR]'),
+(17, 'code_format_cash_out', 'CO/[IN]/[MONTH]/[YEAR]'),
+(18, 'separator_decimal', '.'),
+(19, 'separator_thousand', ','),
+(20, 'date_format', 'd/m/Y'),
+(21, 'date_format_uk', 'DD/MM/YYYY');
 
 -- --------------------------------------------------------
 
@@ -543,7 +544,7 @@ ALTER TABLE `sale_shipping`
 -- AUTO_INCREMENT for table `settings`
 --
 ALTER TABLE `settings`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 --
 -- AUTO_INCREMENT for table `suppliers`
 --

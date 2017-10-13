@@ -1,6 +1,43 @@
+altair_forms.parsley_validation_config();
+$(function () {
+    altair_form_validation.init()
+}), altair_form_validation = {
+    init: function () {
+        var i = $("#form-import");
+        i.parsley().on("form:validated", function () {
+            altair_md.update_input(i.find(".md-input-danger"))
+        }).on("field:validated", function (i) {
+            $(i.$element).hasClass("md-input") && altair_md.update_input($(i.$element))
+        }), window.Parsley.on("field:validate", function () {
+            var i = $(this.$element).closest(".md-input-wrapper").siblings(".error_server_side");
+            i && i.hide()
+        })
+    }
+};
+$('body').on('submit', '#form-import', function (e) {
+    e.preventDefault();
+    $('#form-import').ajaxSubmit({
+        success: function (data) {
+            data = JSON.parse(data);
+            showNotify(data.message, data.status);
+            if (data.status == 'success') {
+                $('table').trigger('pagerUpdate');
+                showModal('import');
+            } else if (data.status == 'success_redirect') {
+                window.setTimeout(function () {
+                    window.location = base_url + data.redirect;
+                }, 1000);
+            }
+        }
+    });
+    return false;
+});
+
+
 $('body').on('click', '#btn-import', function (e) {
     e.preventDefault();
     $('#form').parsley().reset();
+    $('#save_method').val('import');
     $('#import_data').val('');
     $('.dropify-clear').click();
     $('#form .md-input').each(function () {

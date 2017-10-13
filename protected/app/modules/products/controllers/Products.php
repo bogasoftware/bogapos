@@ -157,12 +157,14 @@ class Products extends CI_Controller {
             do {
                 if ($_FILES['import_data']['name'] != null) {
 
-                    $config['upload_path']   = './files/product/import/';
+                    $config['upload_path']   = './files/excel/imports/';
                     $config['allowed_types'] = 'xls|xlsx';
-                    $config['max_size']      = '10000';
+                    $config['max_size']      = 2048;
                     $this->load->library('upload', $config);
                     $this->upload->initialize($config);
-                    
+                    if (!file_exists($config['upload_path'])) {
+                        mkdir($config['upload_path']);
+                    }
                     
                     $inputFileName = $config['upload_path'] . $_FILES['import_data']['name'];
                     if (file_exists($inputFileName)) {
@@ -188,7 +190,7 @@ class Products extends CI_Controller {
                         }
                         catch (Exception $e) {
                             $return = array(
-                                'message' => 'Error loading file "' . pathinfo($inputFileName, PATHINFO_BASENAME) . '": ' . $e->getMessage(),
+                                'message' => lang('product_error_loading_file_label') . pathinfo($inputFileName, PATHINFO_BASENAME) . '": ' . $e->getMessage(),
                                 'status' => 'danger'
                             );
                             break;
@@ -201,20 +203,21 @@ class Products extends CI_Controller {
                                 for ($row = 2; $row <= $highestRow; $row++) {
                                     $rowData = $sheet->rangeToArray('A' . $row . ':' . $highestColumn . $row, NULL, TRUE, FALSE);
                                     if ($rowData[0][0] != '' && $rowData[0][6] != '') {
-                                        $data['code']    = $rowData[0][0];
-                                        $data['name']    = $rowData[0][1];
+                                        $data['code']           = $rowData[0][0];
+                                        $data['name']           = $rowData[0][1];
                                         $data['description']    = $rowData[0][2];
-                                        $data['quantity']    = $rowData[0][3];
-                                        $data['image']    = $rowData[0][4];
-                                        $data['price']    = $rowData[0][5];
-                                        $data['cost']    = $rowData[0][6];
+                                        $data['quantity']       = $rowData[0][3];
+                                        $data['category']       = $rowData[0][4];
+                                        $data['cost']           = $rowData[0][5];
+                                        $data['price']          = $rowData[0][6];
+                                        //$data['image']    = $rowData[0][8];
                                         
                                         $this->main->insert('products', $data);
                                         
                                     }
                                 }
                                 $return = array(
-                                    'message' => 'Data Fields berhasil di Import.',
+                                    'message' => lang('product_import_success_label'),
                                     'status' => 'success'
                                 );
                             }
@@ -222,7 +225,7 @@ class Products extends CI_Controller {
                     }
                 } else {
                     $return = array(
-                        'message' => 'Tidak ada file yang diupload.',
+                        'message' => lang('product_no_file_upload_label'),
                         'status' => 'danger'
                     );
                 }

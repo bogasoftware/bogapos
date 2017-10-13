@@ -16,6 +16,7 @@ $lang['setting_timezone_label'] = 'Timezone';
 $lang['setting_duedate_label'] = 'Due Date Day';
 $lang['setting_number_decimal_label'] = 'Number of Digits Numbers';
 $lang['setting_code_format_sales_label'] = 'Sales';
+$lang['setting_code_format_sale_shipping_label'] = 'Sale Shipping';
 $lang['setting_code_format_purchases_label'] = 'Purchase';
 $lang['setting_code_format_pos_label'] = 'Cashier Sales';
 $lang['setting_code_format_cash_in_label'] = 'Cash In';

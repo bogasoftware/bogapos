@@ -237,7 +237,7 @@ class Sales extends CI_Controller {
                         $data['shipping'] = $shipping_cost;
                     }
                     $data_shipping = array(
-                        'code' => trx_code('sale_shipping'),
+                        //'code' => trx_code('sale_shipping'),
                         'date' => get_date_mysql($this->input->post('shipping_date')),
                         'recipient' => $this->input->post('shipping_recipient'),
                         'address' => $this->input->post('shipping_address'),

@@ -52,7 +52,7 @@ class Settings extends CI_Controller {
             $data = $this->input->post(null, true);
 
                 if (isset($_FILES['store_logo']['name']) != null) {
-                    $config['upload_path'] = './files/image/logo/';
+                    $config['upload_path'] = './files/images/';
                     $config['allowed_types'] = "gif|jpg|png|jpeg|bmp|jpeg2";
                     $config['max_size'] = 2048;
                     if (!file_exists($config['upload_path'])) {
