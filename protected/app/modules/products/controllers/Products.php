@@ -103,7 +103,7 @@ class Products extends CI_Controller {
             }
             do {
                 if (isset($_FILES['image']['name']) != null) {
-                    $config['upload_path'] = './files/product/';
+                    $config['upload_path'] = './files/images/products/';
                     $config['allowed_types'] = "gif|jpg|png|jpeg|bmp";
                     $config['max_size'] = 2048;
                     if (!file_exists($config['upload_path'])) {

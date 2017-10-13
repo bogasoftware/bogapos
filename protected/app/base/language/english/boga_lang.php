@@ -5,6 +5,7 @@ if (!defined('BASEPATH'))
 
 $lang['menu_dashboard_label'] = 'Dashboard';
 $lang['menu_products_label'] = 'Products';
+$lang['menu_categories_label'] = 'Categories';
 $lang['menu_sales_label'] = 'Sales';
 $lang['menu_sale_pos_label'] = 'Cashier';
 $lang['menu_customers_label'] = 'Customers';

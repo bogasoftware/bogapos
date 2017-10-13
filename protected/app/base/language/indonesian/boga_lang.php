@@ -5,6 +5,7 @@ if (!defined('BASEPATH'))
 
 $lang['menu_dashboard_label'] = 'Dasbor';
 $lang['menu_products_label'] = 'Produk';
+$lang['menu_categories_label'] = 'Kategori';
 $lang['menu_sales_label'] = 'Penjualan';
 $lang['menu_sale_pos_label'] = 'Kasir';
 $lang['menu_customers_label'] = 'Pelanggan';

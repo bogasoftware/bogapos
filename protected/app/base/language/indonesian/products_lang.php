@@ -18,6 +18,7 @@ $lang['product_name_label'] = 'Nama';
 $lang['product_description_label'] = 'Deskripsi';
 $lang['product_cost_label'] = 'Harga Beli';
 $lang['product_price_label'] = 'Harga Jual';
+$lang['product_category_label'] = 'Pilih Kategori';
 $lang['product_stock_label'] = 'Stok';
 
 $lang['product_upload_image_failed_message'] = "Upload gambar gagal.";
