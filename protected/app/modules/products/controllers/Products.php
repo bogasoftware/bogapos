@@ -203,16 +203,18 @@ class Products extends CI_Controller {
                                 for ($row = 2; $row <= $highestRow; $row++) {
                                     $rowData = $sheet->rangeToArray('A' . $row . ':' . $highestColumn . $row, NULL, TRUE, FALSE);
                                     if ($rowData[0][0] != '' && $rowData[0][6] != '') {
-                                        $data['code']           = $rowData[0][0];
-                                        $data['name']           = $rowData[0][1];
-                                        $data['description']    = $rowData[0][2];
-                                        $data['quantity']       = $rowData[0][3];
-                                        $data['category']       = $rowData[0][4];
-                                        $data['cost']           = $rowData[0][5];
-                                        $data['price']          = $rowData[0][6];
-                                        //$data['image']    = $rowData[0][8];
+
+                                        $insert=array(
+                                            'code'          =>  $rowData[0][0],
+                                            'name'          =>  $rowData[0][1],
+                                            'description'   =>  $rowData[0][2],
+                                            'quantity'      =>  $rowData[0][3],
+                                            'category'      =>  $rowData[0][4],
+                                            'cost'          =>  $rowData[0][5],
+                                            'price'         =>  $rowData[0][6]
+                                         );
                                         
-                                        $this->main->insert('products', $data);
+                                        $this->main->insert('products', $insert);
                                         
                                     }
                                 }

@@ -37,7 +37,6 @@ $('body').on('submit', '#form-import', function (e) {
 $('body').on('click', '#btn-import', function (e) {
     e.preventDefault();
     $('#form').parsley().reset();
-    $('#save_method').val('import');
     $('#import_data').val('');
     $('.dropify-clear').click();
     $('#form .md-input').each(function () {

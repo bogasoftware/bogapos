@@ -141,7 +141,6 @@
             <h3 class="uk-modal-title"><?php echo lang('product_import_label'); ?></h3>
         </div>        
         <form class="uk-form-stacked" id="form-import" action="<?php echo current_url(); ?>/import" method="post" enctype="multipart/form-data">
-            <input type="hidden" id="save_method" name="save_method">
             <div class="uk-grid" data-uk-grid-margin>
                 <div class="uk-width-medium-1-1">
                    <input type="file" id="import_data" name="import_data" class="dropify" data-height="100"/>
