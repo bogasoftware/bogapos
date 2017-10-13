@@ -42,7 +42,7 @@
             <div class="header_main_content">
                 <nav class="uk-navbar">
                     <div class="main_logo_top">
-                        <a href="<?php echo site_url(); ?>"><img src="<?php echo site_url() . settings('store_logo'); ?>" alt="" height="15" width="71"/></a>
+                        <a href="<?php echo site_url(); ?>"><img src="<?php echo settings('store_logo'); ?>" alt="" height="15" width="71"/></a>
                     </div>
 
                     <!-- main sidebar switch -->

@@ -322,10 +322,10 @@ INSERT INTO `settings` (`id`, `key`, `value`) VALUES
 (3, 'enable_tax', 'false'),
 (4, 'default_customer', '1'),
 (5, 'default_supplier', '1'),
-(6, 'store_name', 'HIJITOKO'),
-(7, 'store_address', 'zzzzzzzz'),
-(8, 'store_phone', '23123'),
-(9, 'store_logo', './files/image/logo/logo_main_white1.png'),
+(6, 'store_name', 'Bogapos'),
+(7, 'store_address', 'Karawang'),
+(8, 'store_phone', '0000'),
+(9, 'store_logo', './files/images/logo.png'),
 (10, 'duedate_payment', '10'),
 (11, 'number_of_decimal', '2'),
 (12, 'code_format_sales', 'SL/[IN]/[MONTH]/[YEAR]'),
@@ -352,7 +352,7 @@ CREATE TABLE `suppliers` (
   `address` varchar(255) DEFAULT NULL,
   `city` varchar(40) DEFAULT NULL,
   `postcode` int(6) DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `suppliers`
