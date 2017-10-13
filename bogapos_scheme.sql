@@ -1,79 +1,65 @@
--- MySQL dump 10.13  Distrib 5.7.12, for Win64 (x86_64)
+-- phpMyAdmin SQL Dump
+-- version 4.6.5.2
+-- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1    Database: bogapos
--- ------------------------------------------------------
--- Server version	5.5.5-10.1.13-MariaDB
+-- Host: 127.0.0.1
+-- Generation Time: Oct 13, 2017 at 09:53 AM
+-- Server version: 10.1.21-MariaDB
+-- PHP Version: 5.6.30
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `bogasoftware_bogapos`
+--
+
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `auth_groups`
 --
 
-DROP TABLE IF EXISTS `auth_groups`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `auth_groups` (
-  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `id` mediumint(8) UNSIGNED NOT NULL,
   `name` varchar(20) NOT NULL,
-  `description` varchar(100) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `description` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `auth_groups`
 --
 
-LOCK TABLES `auth_groups` WRITE;
-/*!40000 ALTER TABLE `auth_groups` DISABLE KEYS */;
-INSERT INTO `auth_groups` VALUES (1,'admin','Administrator');
-/*!40000 ALTER TABLE `auth_groups` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `auth_groups` (`id`, `name`, `description`) VALUES
+(1, 'admin', 'Administrator');
+
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `auth_login_attempts`
 --
 
-DROP TABLE IF EXISTS `auth_login_attempts`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `auth_login_attempts` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(11) UNSIGNED NOT NULL,
   `ip_address` varchar(15) NOT NULL,
   `login` varchar(100) NOT NULL,
-  `time` int(11) unsigned DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `time` int(11) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `auth_login_attempts`
---
-
-LOCK TABLES `auth_login_attempts` WRITE;
-/*!40000 ALTER TABLE `auth_login_attempts` DISABLE KEYS */;
-/*!40000 ALTER TABLE `auth_login_attempts` ENABLE KEYS */;
-UNLOCK TABLES;
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `auth_users`
 --
 
-DROP TABLE IF EXISTS `auth_users`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `auth_users` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(11) UNSIGNED NOT NULL,
   `ip_address` varchar(45) NOT NULL,
   `username` varchar(100) DEFAULT NULL,
   `password` varchar(255) NOT NULL,
@@ -81,133 +67,96 @@ CREATE TABLE `auth_users` (
   `email` varchar(100) NOT NULL,
   `activation_code` varchar(40) DEFAULT NULL,
   `forgotten_password_code` varchar(40) DEFAULT NULL,
-  `forgotten_password_time` int(11) unsigned DEFAULT NULL,
+  `forgotten_password_time` int(11) UNSIGNED DEFAULT NULL,
   `remember_code` varchar(40) DEFAULT NULL,
-  `created_on` int(11) unsigned NOT NULL,
-  `last_login` int(11) unsigned DEFAULT NULL,
-  `active` tinyint(1) unsigned DEFAULT NULL,
+  `created_on` int(11) UNSIGNED NOT NULL,
+  `last_login` int(11) UNSIGNED DEFAULT NULL,
+  `active` tinyint(1) UNSIGNED DEFAULT NULL,
   `fullname` varchar(100) DEFAULT NULL,
   `phone` varchar(20) DEFAULT NULL,
   `image` varchar(255) DEFAULT NULL,
-  `store` int(11) unsigned DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `warehouse` (`store`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `store` int(11) UNSIGNED DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `auth_users`
 --
 
-LOCK TABLES `auth_users` WRITE;
-/*!40000 ALTER TABLE `auth_users` DISABLE KEYS */;
-INSERT INTO `auth_users` VALUES (1,'127.0.0.1','administrator','$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36','','admin@admin.com','',NULL,NULL,NULL,1268889823,1503592396,1,'Owner','21','',0);
-/*!40000 ALTER TABLE `auth_users` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `auth_users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `fullname`, `phone`, `image`, `store`) VALUES
+(1, '127.0.0.1', 'administrator', '$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36', '', 'admin@admin.com', '', NULL, NULL, NULL, 1268889823, 1507877967, 1, 'Owner', '21', '', 0);
+
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `auth_users_groups`
 --
 
-DROP TABLE IF EXISTS `auth_users_groups`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `auth_users_groups` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `user` int(11) unsigned NOT NULL,
-  `group` mediumint(8) unsigned NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `uc_users_groups` (`user`,`group`),
-  KEY `fk_users_groups_users1_idx` (`user`),
-  KEY `fk_users_groups_groups1_idx` (`group`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `id` int(11) UNSIGNED NOT NULL,
+  `user` int(11) UNSIGNED NOT NULL,
+  `group` mediumint(8) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `auth_users_groups`
 --
 
-LOCK TABLES `auth_users_groups` WRITE;
-/*!40000 ALTER TABLE `auth_users_groups` DISABLE KEYS */;
-INSERT INTO `auth_users_groups` VALUES (1,1,1);
-/*!40000 ALTER TABLE `auth_users_groups` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `auth_users_groups` (`id`, `user`, `group`) VALUES
+(1, 1, 1);
+
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `cash`
 --
 
-DROP TABLE IF EXISTS `cash`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `cash` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(11) UNSIGNED NOT NULL,
   `date` datetime NOT NULL,
   `code` varchar(40) NOT NULL,
   `type` varchar(5) NOT NULL COMMENT 'begin, in, out',
-  `sale` int(11) unsigned DEFAULT NULL,
-  `return` int(11) unsigned DEFAULT NULL,
-  `purchase` int(11) unsigned DEFAULT NULL,
+  `sale` int(11) UNSIGNED DEFAULT NULL,
+  `return` int(11) UNSIGNED DEFAULT NULL,
+  `purchase` int(11) UNSIGNED DEFAULT NULL,
   `amount` double NOT NULL DEFAULT '0',
   `note` varchar(255) DEFAULT NULL,
-  `created_by` int(10) unsigned NOT NULL,
-  `modified_by` int(10) unsigned NOT NULL,
+  `created_by` int(10) UNSIGNED NOT NULL,
+  `modified_by` int(10) UNSIGNED NOT NULL,
   `date_added` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `date_modified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  KEY `sale` (`sale`),
-  KEY `return` (`return`),
-  KEY `purchase` (`purchase`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `date_modified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `cash`
---
-
-LOCK TABLES `cash` WRITE;
-/*!40000 ALTER TABLE `cash` DISABLE KEYS */;
-/*!40000 ALTER TABLE `cash` ENABLE KEYS */;
-UNLOCK TABLES;
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `customers`
 --
 
-DROP TABLE IF EXISTS `customers`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `customers` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(50) NOT NULL,
   `email` varchar(40) DEFAULT NULL,
   `phone` varchar(15) DEFAULT NULL,
   `address` varchar(255) DEFAULT NULL,
   `city` varchar(40) DEFAULT NULL,
-  `postcode` int(6) DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `postcode` int(6) DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `customers`
 --
 
-LOCK TABLES `customers` WRITE;
-/*!40000 ALTER TABLE `customers` DISABLE KEYS */;
-INSERT INTO `customers` VALUES (1,'Default Customer',NULL,NULL,NULL,NULL,0);
-/*!40000 ALTER TABLE `customers` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `customers` (`id`, `name`, `email`, `phone`, `address`, `city`, `postcode`) VALUES
+(1, 'Default Customer', NULL, NULL, NULL, NULL, 0);
+
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `products`
 --
 
-DROP TABLE IF EXISTS `products`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `products` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(11) UNSIGNED NOT NULL,
   `code` varchar(64) NOT NULL,
   `name` varchar(255) NOT NULL,
   `description` text,
@@ -221,64 +170,32 @@ CREATE TABLE `products` (
   `status` tinyint(1) NOT NULL DEFAULT '1',
   `viewed` int(5) NOT NULL DEFAULT '0',
   `date_added` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `date_modified` datetime NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `category` (`category`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `date_modified` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `products`
+-- Table structure for table `product_categories`
 --
 
-LOCK TABLES `products` WRITE;
-/*!40000 ALTER TABLE `products` DISABLE KEYS */;
-/*!40000 ALTER TABLE `products` ENABLE KEYS */;
-UNLOCK TABLES;
+CREATE TABLE `product_categories` (
+  `id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Table structure for table `purchase_product`
---
-
-DROP TABLE IF EXISTS `purchase_product`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `purchase_product` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `purchase` int(10) unsigned NOT NULL,
-  `product` int(10) unsigned NOT NULL,
-  `product_code` varchar(64) NOT NULL,
-  `product_name` varchar(255) NOT NULL,
-  `cost` double NOT NULL DEFAULT '0',
-  `quantity` float NOT NULL DEFAULT '0',
-  `discount` float NOT NULL DEFAULT '0' COMMENT 'percentage',
-  `subtotal` double NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `sale` (`purchase`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `purchase_product`
---
-
-LOCK TABLES `purchase_product` WRITE;
-/*!40000 ALTER TABLE `purchase_product` DISABLE KEYS */;
-/*!40000 ALTER TABLE `purchase_product` ENABLE KEYS */;
-UNLOCK TABLES;
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `purchases`
 --
 
-DROP TABLE IF EXISTS `purchases`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `purchases` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) UNSIGNED NOT NULL,
   `code` varchar(40) NOT NULL,
   `date` datetime NOT NULL,
-  `supplier` int(10) unsigned NOT NULL,
+  `supplier` int(10) UNSIGNED NOT NULL,
   `supplier_name` varchar(50) NOT NULL,
   `note` varchar(255) DEFAULT NULL,
   `subtotal` double NOT NULL DEFAULT '0',
@@ -291,100 +208,41 @@ CREATE TABLE `purchases` (
   `change` double NOT NULL DEFAULT '0',
   `status` varchar(20) DEFAULT NULL,
   `payment_status` varchar(20) DEFAULT NULL,
-  `created_by` int(10) unsigned NOT NULL,
-  `modified_by` int(10) unsigned NOT NULL,
+  `created_by` int(10) UNSIGNED NOT NULL,
+  `modified_by` int(10) UNSIGNED NOT NULL,
   `date_added` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `date_modified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  KEY `code` (`code`),
-  KEY `customer` (`supplier`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `date_modified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `purchases`
+-- Table structure for table `purchase_product`
 --
 
-LOCK TABLES `purchases` WRITE;
-/*!40000 ALTER TABLE `purchases` DISABLE KEYS */;
-/*!40000 ALTER TABLE `purchases` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `sale_product`
---
-
-DROP TABLE IF EXISTS `sale_product`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `sale_product` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `sale` int(10) unsigned NOT NULL,
-  `product` int(10) unsigned NOT NULL,
+CREATE TABLE `purchase_product` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `purchase` int(10) UNSIGNED NOT NULL,
+  `product` int(10) UNSIGNED NOT NULL,
   `product_code` varchar(64) NOT NULL,
   `product_name` varchar(255) NOT NULL,
   `cost` double NOT NULL DEFAULT '0',
-  `net_price` double NOT NULL DEFAULT '0',
-  `fix_price` double NOT NULL DEFAULT '0',
   `quantity` float NOT NULL DEFAULT '0',
   `discount` float NOT NULL DEFAULT '0' COMMENT 'percentage',
-  `subtotal` double NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `sale` (`sale`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `subtotal` double NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `sale_product`
---
-
-LOCK TABLES `sale_product` WRITE;
-/*!40000 ALTER TABLE `sale_product` DISABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `sale_shipping`
---
-
-DROP TABLE IF EXISTS `sale_shipping`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `sale_shipping` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `sale` int(10) unsigned NOT NULL,
-  `date` datetime NOT NULL,
-  `code` varchar(45) NOT NULL,
-  `recipient` varchar(50) DEFAULT NULL,
-  `address` varchar(255) DEFAULT NULL,
-  `note` varchar(255) DEFAULT NULL,
-  `date_added` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `date_modified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  KEY `sale` (`sale`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `sale_shipping`
---
-
-LOCK TABLES `sale_shipping` WRITE;
-/*!40000 ALTER TABLE `sale_shipping` DISABLE KEYS */;
-/*!40000 ALTER TABLE `sale_shipping` ENABLE KEYS */;
-UNLOCK TABLES;
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `sales`
 --
 
-DROP TABLE IF EXISTS `sales`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sales` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) UNSIGNED NOT NULL,
   `code` varchar(40) NOT NULL,
   `date` datetime NOT NULL,
-  `customer` int(10) unsigned NOT NULL,
+  `customer` int(10) UNSIGNED NOT NULL,
   `customer_name` varchar(50) NOT NULL,
   `note` varchar(255) DEFAULT NULL,
   `subtotal` double NOT NULL DEFAULT '0',
@@ -398,89 +256,299 @@ CREATE TABLE `sales` (
   `status` varchar(20) DEFAULT NULL,
   `payment_status` varchar(20) DEFAULT NULL,
   `pos` tinyint(1) NOT NULL DEFAULT '0',
-  `created_by` int(10) unsigned NOT NULL,
-  `modified_by` int(10) unsigned NOT NULL,
+  `created_by` int(10) UNSIGNED NOT NULL,
+  `modified_by` int(10) UNSIGNED NOT NULL,
   `date_added` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `date_modified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  KEY `code` (`code`),
-  KEY `customer` (`customer`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `date_modified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `sales`
+-- Table structure for table `sale_product`
 --
 
-LOCK TABLES `sales` WRITE;
-/*!40000 ALTER TABLE `sales` DISABLE KEYS */;
-/*!40000 ALTER TABLE `sales` ENABLE KEYS */;
-UNLOCK TABLES;
+CREATE TABLE `sale_product` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `sale` int(10) UNSIGNED NOT NULL,
+  `product` int(10) UNSIGNED NOT NULL,
+  `product_code` varchar(64) NOT NULL,
+  `product_name` varchar(255) NOT NULL,
+  `cost` double NOT NULL DEFAULT '0',
+  `net_price` double NOT NULL DEFAULT '0',
+  `fix_price` double NOT NULL DEFAULT '0',
+  `quantity` float NOT NULL DEFAULT '0',
+  `discount` float NOT NULL DEFAULT '0' COMMENT 'percentage',
+  `subtotal` double NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sale_shipping`
+--
+
+CREATE TABLE `sale_shipping` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `sale` int(10) UNSIGNED NOT NULL,
+  `date` datetime NOT NULL,
+  `code` varchar(45) NOT NULL,
+  `recipient` varchar(50) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `note` varchar(255) DEFAULT NULL,
+  `date_added` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `date_modified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `settings`
 --
 
-DROP TABLE IF EXISTS `settings`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `settings` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) UNSIGNED NOT NULL,
   `key` varchar(45) NOT NULL,
-  `value` text NOT NULL,
-  PRIMARY KEY (`id`,`key`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `value` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `settings`
 --
 
-LOCK TABLES `settings` WRITE;
-/*!40000 ALTER TABLE `settings` DISABLE KEYS */;
-INSERT INTO `settings` VALUES (1,'timezone','Asia/Jakarta'),(2,'language','english'),(3,'enable_tax','false'),(4,'default_customer','1'),(5,'default_supplier','1'),(6,'store_name','My Store'),(7,'store_address','asd'),(8,'store_phone','213'),(9,'duedate_payment','10'),(10,'number_of_decimal','2'),(11,'code_format_sales','SL/[IN]/[MONTH]/[YEAR]'),(12,'code_format_purchases','PC/[IN]/[MONTH]/[YEAR]'),(13,'code_format_pos','POS/[IN]/[MONTH]/[YEAR]'),(14,'code_format_cash_in','CI/[IN]/[MONTH]/[YEAR]'),(15,'code_format_cash_out','CO/[IN]/[MONTH]/[YEAR]'),(16,'separator_decimal','.'),(17,'separator_thousand',','),(18,'date_format','d/m/Y'),(19,'date_format_uk','DD/MM/YYYY');
-/*!40000 ALTER TABLE `settings` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `settings` (`id`, `key`, `value`) VALUES
+(1, 'timezone', 'Asia/Jakarta'),
+(2, 'language', 'indonesian'),
+(3, 'enable_tax', 'false'),
+(4, 'default_customer', '1'),
+(5, 'default_supplier', '1'),
+(6, 'store_name', 'HIJITOKO'),
+(7, 'store_address', 'zzzzzzzz'),
+(8, 'store_phone', '23123'),
+(9, 'store_logo', './files/image/logo/logo_main_white1.png'),
+(10, 'duedate_payment', '10'),
+(11, 'number_of_decimal', '2'),
+(12, 'code_format_sales', 'SL/[IN]/[MONTH]/[YEAR]'),
+(13, 'code_format_purchases', 'PC/[IN]/[MONTH]/[YEAR]'),
+(14, 'code_format_pos', 'POS/[IN]/[MONTH]/[YEAR]'),
+(15, 'code_format_cash_in', 'CI/[IN]/[MONTH]/[YEAR]'),
+(16, 'code_format_cash_out', 'CO/[IN]/[MONTH]/[YEAR]'),
+(17, 'separator_decimal', '.'),
+(18, 'separator_thousand', ','),
+(19, 'date_format', 'd/m/Y'),
+(20, 'date_format_uk', 'DD/MM/YYYY');
+
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `suppliers`
 --
 
-DROP TABLE IF EXISTS `suppliers`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `suppliers` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(50) NOT NULL,
   `email` varchar(40) DEFAULT NULL,
   `phone` varchar(15) DEFAULT NULL,
   `address` varchar(255) DEFAULT NULL,
   `city` varchar(40) DEFAULT NULL,
-  `postcode` int(6) DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `postcode` int(6) DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 --
 -- Dumping data for table `suppliers`
 --
 
-LOCK TABLES `suppliers` WRITE;
-/*!40000 ALTER TABLE `suppliers` DISABLE KEYS */;
-/*!40000 ALTER TABLE `suppliers` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `suppliers` (`id`, `name`, `email`, `phone`, `address`, `city`, `postcode`) VALUES
+(1, 'Default Suplier', 'suplier@admin.com', '081111111', 'Karawang', 'Karawang', 41351);
 
 --
--- Dumping routines for database 'bogapos'
+-- Indexes for dumped tables
 --
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+--
+-- Indexes for table `auth_groups`
+--
+ALTER TABLE `auth_groups`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `auth_login_attempts`
+--
+ALTER TABLE `auth_login_attempts`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `auth_users`
+--
+ALTER TABLE `auth_users`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `warehouse` (`store`);
+
+--
+-- Indexes for table `auth_users_groups`
+--
+ALTER TABLE `auth_users_groups`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `uc_users_groups` (`user`,`group`),
+  ADD KEY `fk_users_groups_users1_idx` (`user`),
+  ADD KEY `fk_users_groups_groups1_idx` (`group`);
+
+--
+-- Indexes for table `cash`
+--
+ALTER TABLE `cash`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `sale` (`sale`),
+  ADD KEY `return` (`return`),
+  ADD KEY `purchase` (`purchase`);
+
+--
+-- Indexes for table `customers`
+--
+ALTER TABLE `customers`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `products`
+--
+ALTER TABLE `products`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `category` (`category`);
+
+--
+-- Indexes for table `product_categories`
+--
+ALTER TABLE `product_categories`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `purchases`
+--
+ALTER TABLE `purchases`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `code` (`code`),
+  ADD KEY `customer` (`supplier`);
+
+--
+-- Indexes for table `purchase_product`
+--
+ALTER TABLE `purchase_product`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `sale` (`purchase`);
+
+--
+-- Indexes for table `sales`
+--
+ALTER TABLE `sales`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `code` (`code`),
+  ADD KEY `customer` (`customer`);
+
+--
+-- Indexes for table `sale_product`
+--
+ALTER TABLE `sale_product`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `sale` (`sale`);
+
+--
+-- Indexes for table `sale_shipping`
+--
+ALTER TABLE `sale_shipping`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `sale` (`sale`);
+
+--
+-- Indexes for table `settings`
+--
+ALTER TABLE `settings`
+  ADD PRIMARY KEY (`id`,`key`);
+
+--
+-- Indexes for table `suppliers`
+--
+ALTER TABLE `suppliers`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `auth_groups`
+--
+ALTER TABLE `auth_groups`
+  MODIFY `id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `auth_login_attempts`
+--
+ALTER TABLE `auth_login_attempts`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `auth_users`
+--
+ALTER TABLE `auth_users`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `auth_users_groups`
+--
+ALTER TABLE `auth_users_groups`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `cash`
+--
+ALTER TABLE `cash`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `customers`
+--
+ALTER TABLE `customers`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `products`
+--
+ALTER TABLE `products`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `product_categories`
+--
+ALTER TABLE `product_categories`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `purchases`
+--
+ALTER TABLE `purchases`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `purchase_product`
+--
+ALTER TABLE `purchase_product`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `sales`
+--
+ALTER TABLE `sales`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `sale_product`
+--
+ALTER TABLE `sale_product`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `sale_shipping`
+--
+ALTER TABLE `sale_shipping`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `settings`
+--
+ALTER TABLE `settings`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+--
+-- AUTO_INCREMENT for table `suppliers`
+--
+ALTER TABLE `suppliers`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
--- Dump completed on 2017-08-25  0:16:11

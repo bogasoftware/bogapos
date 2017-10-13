@@ -112,6 +112,7 @@ function settings($key) {
     if ($key) {
         $CI = get_instance();
         $CI->load->driver('cache', array('adapter' => 'apc', 'backup' => 'file'));
+        $CI->cache->delete('settings');
         if ($CI->cache->get('settings')) {
             return $CI->cache->get('settings')[$key];
         } else {

@@ -50,28 +50,6 @@
     </div>
 
 
-<div class="uk-modal" id="modal-import">
-    <div class="uk-modal-dialog">
-        <div class="uk-modal-header">
-            <h3 class="uk-modal-title">Import Data</h3>
-        </div>        
-        <form class="uk-form-stacked" id="form" action="<?php echo current_url(); ?>/import" method="post" enctype="multipart/form-data">
-            <div class="uk-grid" data-uk-grid-margin>
-                <div class="uk-width-medium-1-1">
-                   <input type="file" id="import_data" name="import_data" class="dropify" data-height="100"/>
-                </div>
-            </div>
-
-
-            <div class="uk-modal-footer uk-text-right">
-                <button type="button" class="md-btn md-btn-flat uk-modal-close">Batal</button>
-                <button type="submit" class="md-btn md-btn-flat md-btn-flat-primary">Import</button>
-            </div>
-        </form>
-    </div>
-</div>
-
-
 
 <div class="uk-modal" id="modal-form">
     <div class="uk-modal-dialog">
@@ -140,7 +118,7 @@
                 <div class="uk-width-medium-1-1">
                     <div class="uk-form-row parsley-row">
                         <label for="image" class="uk-form-label"><?php echo lang('product_image_label'); ?></label>
-                        <input type="file" id="image" name="image" accept="image/*">
+                        <input type="file" id="image" name="image" class="dropify" data-height="100" data-max-file-size="3M" data-allowed-file-extensions="jpeg png jpg bmp gif"/>
                     </div>
                 </div>
                 <img id="image-image" style="height: 50px;" />
@@ -148,6 +126,31 @@
             <div class="uk-modal-footer uk-text-right">
                 <button type="button" class="md-btn md-btn-flat uk-modal-close"><?php echo lang('action_cancel_button'); ?></button>
                 <button type="submit" class="md-btn md-btn-flat md-btn-flat-primary"><?php echo lang('action_save_button'); ?></button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+
+
+<div class="uk-modal" id="modal-import">
+    <div class="uk-modal-dialog">
+        <div class="uk-modal-header">
+            <h3 class="uk-modal-title">Import Data</h3>
+        </div>        
+        <form class="uk-form-stacked" id="form" action="<?php echo current_url(); ?>/import" method="post" enctype="multipart/form-data">
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-medium-1-1">
+                   <input type="file" id="import_data" name="import_data" class="dropify" data-height="100"/>
+                </div>
+            </div>
+
+
+            <div class="uk-modal-footer uk-text-right">
+                <button type="button" class="md-btn md-btn-flat uk-modal-close">Batal</button>
+                <button type="submit" class="md-btn md-btn-flat md-btn-flat-primary">Import</button>
             </div>
         </form>
     </div>
